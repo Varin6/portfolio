@@ -10716,6 +10716,10 @@ body {
   margin-bottom: 30px;
 }
 
+#menu-title {
+  transition-duration: 0.3s;
+}
+
 .menu {
   position: absolute;
   top: 0;
@@ -10751,8 +10755,8 @@ body {
 }
 
 .menu-items .menu-icon:hover:after {
-  -webkit-transform: translateY(-7px);
-          transform: translateY(-7px);
+  -webkit-transform: translateX(4px);
+          transform: translateX(4px);
 }
 
 .menu-items__home:after {
@@ -10778,5 +10782,16 @@ body {
 .menu-items__contact:after {
   font-weight: 900;
   content: "\F0E0";
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition-property: opacity;
+  transition-duration: 0.25s;
+}
+
+.fade-enter,
+.fade-leave-active {
+  opacity: 0;
 }
 

@@ -4,6 +4,7 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
+
 require('./bootstrap');
 window.Vue = require('vue');
 require('./general');
@@ -28,6 +29,9 @@ Vue.use(VueAxios, axios);
 
 import Home from './components/Home.vue';
 import About from './components/About.vue';
+import CaseStudies from "./components/CaseStudies";
+import Blog from './components/Blog.vue';
+import Contact from './components/Contact.vue';
 
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
@@ -52,32 +56,35 @@ const router = new VueRouter({
         name: 'home',
         component: Home
     },{
-        path: '/home',
-        name: 'home',
-        component: Home
-    },{
         path: '/about',
         name: 'about',
         component: About,
         meta: {
             auth: false
         }
+    },{
+        path: '/case-studies',
+        name: 'case-studies',
+        component: CaseStudies,
+        meta: {
+            auth: false
+        }
+    },{
+        path: '/blog',
+        name: 'blog',
+        component: Blog,
+        meta: {
+            auth: false
+        }
+    },{
+        path: '/contact',
+        name: 'contact',
+        component: Contact,
+        meta: {
+            auth: false
+        }
     }
-    // ,{
-    //     path: '/login',
-    //     name: 'login',
-    //     component: Login,
-    //     meta: {
-    //         auth: false
-    //     }
-    // },{
-    //     path: '/dashboard',
-    //     name: 'dashboard',
-    //     component: Dashboard,
-    //     meta: {
-    //         auth: true
-    //     }
-    // }
+
     ]
 });
 

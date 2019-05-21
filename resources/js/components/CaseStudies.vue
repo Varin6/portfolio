@@ -1,6 +1,6 @@
 <template>
-    <div class="about-wrap">
-        <h1 class="about-title">And this is About Me page...</h1>
+    <div class="case-studies-wrap">
+        <h1 class="case-studies-title">Some of my work will go here!</h1>
     </div>
 </template>
 

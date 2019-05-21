@@ -1,15 +1,21 @@
 // Body
 
+$dosis: 'Dosis', sans-serif;
+$montserrat: 'Montserrat', sans-serif;
+
+$font-dark: #0d0d0d;
+
 html, body {
   background-color: #fff;
-  color: #636b6f;
-  font-family: 'Nunito', sans-serif;
   font-weight: 200;
   height: 100vh;
   margin: 0;
   position: relative;
-  background: #3f9ae5;
+  color: $font-dark;
+  font-family: $montserrat;
+  background: $font-dark;
 }
+
 
 .full-height {
   height: 100vh;

@@ -10665,13 +10665,13 @@ a.text-dark:focus {
 html,
 body {
   background-color: #fff;
-  color: #636b6f;
-  font-family: "Nunito", sans-serif;
   font-weight: 200;
   height: 100vh;
   margin: 0;
   position: relative;
-  background: #3f9ae5;
+  color: #0d0d0d;
+  font-family: "Montserrat", sans-serif;
+  background: #0d0d0d;
 }
 
 .full-height {
@@ -10725,38 +10725,81 @@ body {
   top: 0;
   left: 0;
   height: 100%;
-  width: 10%;
-  background: #eee;
+  width: 100px;
   display: flex;
   align-items: stretch;
   justify-content: center;
+  z-index: 10;
 }
 
-.menu-items {
-  width: 100%;
+.menu .overlay {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  height: 200px;
+  width: 100vw;
+  opacity: 0;
+  content: "";
+  transition-duration: 0.2s;
   display: flex;
   align-items: center;
   justify-content: center;
+  color: #fff;
+  font-family: "Dosis", sans-serif;
+  font-size: 5rem;
+}
+
+.menu .overlay.\--overlay-down {
+  transition-duration: 0.2s;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  top: 50%;
+  opacity: 1;
+}
+
+.menu-items {
+  align-content: center;
+  width: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
   flex-wrap: wrap;
   font-family: "Font Awesome 5 Free";
+  z-index: 100;
+  transition-duration: 0.2s;
+}
+
+.menu-items.\--menu-hidden {
+  -webkit-transform-origin: left center;
+          transform-origin: left center;
+  opacity: 0.4;
+}
+
+.menu-items.\--menu-hidden .menu-icon {
+  font-size: 2rem;
 }
 
 .menu-items .menu-icon {
   width: 100%;
+  padding-left: 15px;
   display: flex;
-  align-items: center;
-  justify-content: center;
   font-size: 4rem;
-  transition-duration: 0.3s;
+  align-items: center;
+  justify-content: flex-start;
+  text-decoration: none;
+  margin-bottom: 20px;
 }
 
 .menu-items .menu-icon:after {
   transition-duration: 0.3s;
+  -webkit-transform-origin: left center;
+          transform-origin: left center;
+  color: #fff;
 }
 
 .menu-items .menu-icon:hover:after {
-  -webkit-transform: translateX(4px);
-          transform: translateX(4px);
+  -webkit-transform: scale(1.5);
+          transform: scale(1.5);
 }
 
 .menu-items__home:after {
@@ -10784,10 +10827,105 @@ body {
   content: "\F0E0";
 }
 
+.home-wrap {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px 30px 15px 30px;
+  background: #5f2c82;
+  /* fallback for old browsers */
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to left, #49a09d, #5f2c82);
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.home-wrap .home-title {
+  margin-bottom: 200px;
+}
+
+.about-wrap {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px 30px 15px 30px;
+  background: #f2709c;
+  /* fallback for old browsers */
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #ff9472, #f2709c);
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.about-wrap .about-title {
+  margin-bottom: 200px;
+}
+
+.case-studies-wrap {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px 30px 15px 30px;
+  background: #c21500;
+  /* fallback for old browsers */
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #ffc500, #c21500);
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.case-studies-wrap .case-studies-title {
+  margin-bottom: 200px;
+}
+
+.blog-wrap {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px 30px 15px 30px;
+  background: #4b6cb7;
+  /* fallback for old browsers */
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to left, #182848, #4b6cb7);
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.blog-wrap .blog-title {
+  margin-bottom: 200px;
+}
+
+.contact-wrap {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px 30px 15px 30px;
+  background: #FC354C;
+  /* fallback for old browsers */
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to left, #0ABFBC, #FC354C);
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.contact-wrap .contact-title {
+  margin-bottom: 200px;
+}
+
+html,
+body,
+#app {
+  overflow: hidden;
+}
+
 .fade-enter-active,
 .fade-leave-active {
-  transition-property: opacity;
-  transition-duration: 0.25s;
+  transition: opacity 0.2s ease;
 }
 
 .fade-enter,

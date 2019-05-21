@@ -9,11 +9,14 @@
 
 @import 'frame';
 @import 'menu';
+@import 'home';
 
+html, body, #app {
+  overflow: hidden;
+}
 
 .fade-enter-active, .fade-leave-active {
-  transition-property: opacity;
-  transition-duration: .25s;
+  transition: opacity .2s ease;
 }
 
 .fade-enter, .fade-leave-active {

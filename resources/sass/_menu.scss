@@ -43,32 +43,59 @@
     flex-wrap: wrap;
     font-family: "Font Awesome 5 Free";
     z-index: 100;
-    transition-duration: .2s;
+    transition-duration: 0.3s;
+    opacity: 0.8;
     &.--menu-hidden {
       transform-origin: left center;
-      opacity: 0.4;
       .menu-icon {
         font-size: 2rem;
+        opacity: 0;
+      }
+      .menu-icon__burger {
+        transition-delay: 0.4s;
       }
     }
     .menu-icon {
       width: 100%;
       padding-left: 15px;
       display: flex;
-      font-size: 4rem;
+      font-size: 2rem;
       align-items: center;
       justify-content: flex-start;
-      //transition-duration: .3s;
+      transition-duration: .3s;
       text-decoration: none;
       margin-bottom: 20px;
+      &__burger {
+        position: absolute;
+        top:50%;
+        transform: translateY(-50%);
+        transition-duration: 0.2s;
+        font-size: 2rem;
+        transition-delay: 0s;
+      }
+      &__burger:hover {
+        font-size: 2rem;
+        transition-delay: 1s;
+      }
+      &__burger:hover:after {
+        transition-delay: 1s;
+        font-size: 2rem;
+      }
+      &__burger:after {
+        font-weight: 900;
+        content: "\f0c9";
+        transition-duration: 1s;
+        transition-delay: 1s;
+
+      }
       &:after {
-        transition-duration: .3s;
         transform-origin: left center;
         color: #fff;
+        transition-duration: 0.3s;
       }
       &:hover {
         &:after {
-          transform: scale(1.5);
+          transform: scale(1.2);
         }
       }
     }
@@ -92,5 +119,6 @@
       font-weight: 900;
       content: "\f0e0";
     }
+
   }
 }

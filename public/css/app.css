@@ -10766,40 +10766,73 @@ body {
   flex-wrap: wrap;
   font-family: "Font Awesome 5 Free";
   z-index: 100;
-  transition-duration: 0.2s;
+  transition-duration: 0.3s;
+  opacity: 0.8;
 }
 
 .menu-items.\--menu-hidden {
   -webkit-transform-origin: left center;
           transform-origin: left center;
-  opacity: 0.4;
 }
 
 .menu-items.\--menu-hidden .menu-icon {
   font-size: 2rem;
+  opacity: 0;
+}
+
+.menu-items.\--menu-hidden .menu-icon__burger {
+  transition-delay: 0.4s;
 }
 
 .menu-items .menu-icon {
   width: 100%;
   padding-left: 15px;
   display: flex;
-  font-size: 4rem;
+  font-size: 2rem;
   align-items: center;
   justify-content: flex-start;
+  transition-duration: 0.3s;
   text-decoration: none;
   margin-bottom: 20px;
 }
 
+.menu-items .menu-icon__burger {
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  transition-duration: 0.2s;
+  font-size: 2rem;
+  transition-delay: 0s;
+}
+
+.menu-items .menu-icon__burger:hover {
+  font-size: 2rem;
+  transition-delay: 1s;
+}
+
+.menu-items .menu-icon__burger:hover:after {
+  transition-delay: 1s;
+  font-size: 2rem;
+}
+
+.menu-items .menu-icon__burger:after {
+  font-weight: 900;
+  content: "\F0C9";
+  transition-duration: 1s;
+  transition-delay: 1s;
+}
+
 .menu-items .menu-icon:after {
-  transition-duration: 0.3s;
   -webkit-transform-origin: left center;
           transform-origin: left center;
   color: #fff;
+  transition-duration: 0.3s;
 }
 
 .menu-items .menu-icon:hover:after {
-  -webkit-transform: scale(1.5);
-          transform: scale(1.5);
+  -webkit-transform: scale(1.2);
+          transform: scale(1.2);
 }
 
 .menu-items__home:after {

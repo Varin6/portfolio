@@ -1958,21 +1958,84 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       menuIsHovering: false,
       iconIsHovering: false,
-      menuItem: ''
+      menuItem: '',
+      items: [{
+        translate: 0,
+        name: 'Home',
+        url: '/',
+        "class": 'home'
+      }, {
+        translate: 0,
+        name: 'About Me',
+        url: 'about',
+        "class": 'about'
+      }, {
+        translate: 0,
+        name: 'Case Studies',
+        url: 'case-studies',
+        "class": 'case-studies'
+      }, {
+        translate: 0,
+        name: 'Blog',
+        url: 'blog',
+        "class": 'blog'
+      }, {
+        translate: 0,
+        name: 'Get in touch!',
+        url: 'contact',
+        "class": 'contact'
+      }]
     };
   },
   methods: {
     menuTitle: function menuTitle() {
       var title = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
       this.menuItem = title;
+    },
+    zeroTranslate: function zeroTranslate() {
+      var thisItems = this.items;
+      this.items.forEach(function (item, key) {
+        thisItems[key].translate = 0;
+      });
+    },
+    transformX: function transformX() {
+      var itemsCount = this.items.length,
+          middle = Math.floor(itemsCount / 2),
+          thisItems = this.items,
+          baseValue = 71 * middle;
+      this.items.forEach(function (item, key) {
+        thisItems[key].translate = baseValue;
+        baseValue = baseValue - 71;
+      });
     }
   },
+  computed: {},
   mounted: function mounted() {
+    this.transformX();
     console.log('Component mounted.');
   }
 });
@@ -37525,99 +37588,44 @@ var render = function() {
         on: {
           mouseover: function($event) {
             _vm.menuIsHovering = true
+            _vm.zeroTranslate()
           },
           mouseout: function($event) {
             _vm.menuIsHovering = false
+            _vm.transformX()
           }
         }
       },
       [
-        _c("router-link", {
-          staticClass: "menu-icon menu-items__home",
-          attrs: { to: "/" },
-          nativeOn: {
-            click: function($event) {
-              _vm.iconIsHovering = false
-            },
-            mouseover: function($event) {
-              _vm.menuTitle("Home")
-              _vm.iconIsHovering = true
-            },
-            mouseout: function($event) {
-              _vm.iconIsHovering = false
-            }
-          }
+        _c("div", {
+          staticClass: "menu-icon menu-icon__burger",
+          staticStyle: { opacity: "1" },
+          style: [_vm.menuIsHovering ? { opacity: 0 } : { opacity: 1 }]
         }),
         _vm._v(" "),
-        _c("router-link", {
-          staticClass: "menu-icon menu-items__about",
-          attrs: { to: "about" },
-          nativeOn: {
-            click: function($event) {
-              _vm.iconIsHovering = false
-            },
-            mouseover: function($event) {
-              _vm.menuTitle("About Me")
-              _vm.iconIsHovering = true
-            },
-            mouseout: function($event) {
-              _vm.iconIsHovering = false
+        _vm._l(_vm.items, function(item, index) {
+          return _c("router-link", {
+            key: item.class,
+            staticClass: "menu-icon",
+            class: "menu-items__" + item.class,
+            style: "transform:translateY(" + item.translate + "px)",
+            attrs: { to: { path: item.url } },
+            nativeOn: {
+              click: function($event) {
+                _vm.iconIsHovering = false
+              },
+              mouseover: function($event) {
+                _vm.menuTitle(item.name)
+                _vm.iconIsHovering = true
+              },
+              mouseout: function($event) {
+                _vm.iconIsHovering = false
+              }
             }
-          }
-        }),
-        _vm._v(" "),
-        _c("router-link", {
-          staticClass: "menu-icon menu-items__case-studies",
-          attrs: { to: "case-studies" },
-          nativeOn: {
-            click: function($event) {
-              _vm.iconIsHovering = false
-            },
-            mouseover: function($event) {
-              _vm.menuTitle("Case Studies")
-              _vm.iconIsHovering = true
-            },
-            mouseout: function($event) {
-              _vm.iconIsHovering = false
-            }
-          }
-        }),
-        _vm._v(" "),
-        _c("router-link", {
-          staticClass: "menu-icon menu-items__blog",
-          attrs: { to: "blog" },
-          nativeOn: {
-            click: function($event) {
-              _vm.iconIsHovering = false
-            },
-            mouseover: function($event) {
-              _vm.menuTitle("Blog")
-              _vm.iconIsHovering = true
-            },
-            mouseout: function($event) {
-              _vm.iconIsHovering = false
-            }
-          }
-        }),
-        _vm._v(" "),
-        _c("router-link", {
-          staticClass: "menu-icon menu-items__contact",
-          attrs: { to: "contact" },
-          nativeOn: {
-            click: function($event) {
-              _vm.iconIsHovering = false
-            },
-            mouseover: function($event) {
-              _vm.menuTitle("Get In Touch!")
-              _vm.iconIsHovering = true
-            },
-            mouseout: function($event) {
-              _vm.iconIsHovering = false
-            }
-          }
+          })
         })
       ],
-      1
+      2
     )
   ])
 }

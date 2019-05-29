@@ -36,6 +36,7 @@ import Contact from './components/Contact.vue';
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('menu-component', require('./components/Menu.vue').default);
+Vue.component('animated-background-component', require('./components/AnimatedBackground.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

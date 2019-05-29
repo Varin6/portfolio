@@ -1809,10 +1809,10 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     init: function init() {
       var container = document.getElementById('animated-background');
-      this.camera = new three__WEBPACK_IMPORTED_MODULE_0__["PerspectiveCamera"](25, container.clientWidth / container.clientHeight, 0.01, 10);
-      this.camera.position.z = 4;
+      this.camera = new three__WEBPACK_IMPORTED_MODULE_0__["PerspectiveCamera"](75, container.clientWidth / container.clientHeight, 0.01, 20);
+      this.camera.position.z = 7;
       this.scene = new three__WEBPACK_IMPORTED_MODULE_0__["Scene"]();
-      var geometry = new three__WEBPACK_IMPORTED_MODULE_0__["BoxGeometry"](1, 1, 1);
+      var geometry = new three__WEBPACK_IMPORTED_MODULE_0__["SphereGeometry"](4, 16, 16);
       var material = new three__WEBPACK_IMPORTED_MODULE_0__["MeshNormalMaterial"]({
         color: 0xaa2547,
         wireframeLinewidth: 10,
@@ -1839,8 +1839,8 @@ __webpack_require__.r(__webpack_exports__);
       window.addEventListener('mousemove', function () {
         var x = event.clientX,
             y = event.clientY;
-        mesh.rotation.y = x / 2000;
-        mesh.rotation.x = y / 2000; // mesh.rotation.z = y/7000;
+        mesh.rotation.y = (x - container.clientWidth / 2) / 2000;
+        mesh.rotation.x = (y - container.clientHeight / 2) / 2000; // mesh.rotation.z = y/7000;
         // mesh.rotation.z = x/7000;
       });
     },

@@ -23,12 +23,12 @@
             init: function() {
                 let container = document.getElementById('animated-background');
 
-                this.camera = new Three.PerspectiveCamera(25, container.clientWidth/container.clientHeight, 0.01, 10);
-                this.camera.position.z = 4;
+                this.camera = new Three.PerspectiveCamera(75, container.clientWidth/container.clientHeight, 0.01, 20);
+                this.camera.position.z = 7;
 
                 this.scene = new Three.Scene();
 
-                let geometry = new Three.BoxGeometry(1, 1, 1);
+                let geometry = new Three.SphereGeometry(4, 16, 16);
                 let material = new Three.MeshNormalMaterial({
                     color: 0xaa2547,
                     wireframeLinewidth: 10,
@@ -59,8 +59,8 @@
                     let x = event.clientX,
                         y = event.clientY;
 
-                    mesh.rotation.y = x/2000;
-                    mesh.rotation.x = y/2000;
+                    mesh.rotation.y = (x-(container.clientWidth/2))/2000;
+                    mesh.rotation.x = (y-(container.clientHeight/2))/2000;
                     // mesh.rotation.z = y/7000;
                     // mesh.rotation.z = x/7000;
 

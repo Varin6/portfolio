@@ -2,7 +2,7 @@
     <div class="component-wrap about-wrap">
         <div class="component-background about-background"></div>
         <div class="component-content about-content">
-            <h1 class="about-title">And this is About Me page...</h1>
+            <!--<h1 class="about-title">And this is About Me page...</h1>-->
         </div>
     </div>
 </template>

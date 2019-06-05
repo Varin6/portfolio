@@ -16,6 +16,7 @@
     <body>
         <div id="app">
             <animated-background-component></animated-background-component>
+            {{--<playground-component></playground-component>--}}
             <menu-component></menu-component>
             <transition name="fade" mode="out-in">
                 <router-view></router-view>

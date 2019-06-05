@@ -1808,6 +1808,7 @@ __webpack_require__.r(__webpack_exports__);
       mesh: null,
       mesh2: null,
       spotlight: null,
+      spotLight2: null,
       time: 0
     };
   },
@@ -1817,31 +1818,53 @@ __webpack_require__.r(__webpack_exports__);
       this.camera = new three__WEBPACK_IMPORTED_MODULE_0__["PerspectiveCamera"](75, container.clientWidth / container.clientHeight, 0.01, 20);
       this.camera.position.z = 7;
       this.scene = new three__WEBPACK_IMPORTED_MODULE_0__["Scene"]();
-      var texture = new three__WEBPACK_IMPORTED_MODULE_0__["TextureLoader"]().load('/images/eye-skin.png');
-      var texture2 = new three__WEBPACK_IMPORTED_MODULE_0__["TextureLoader"]().load('/images/eye4.png'); //let texture = new Three.TextureLoader().load( '/images/planet.jpg');
-      //texture.offset.x = 0.1;
-      // texture.offset.y = 0.1;
+      var texture = new three__WEBPACK_IMPORTED_MODULE_0__["TextureLoader"]().load('/images/eye-real-pupil.png');
+      var textureNormal = new three__WEBPACK_IMPORTED_MODULE_0__["TextureLoader"]().load('/images/eye-real-normal.png');
+      var textureBump = new three__WEBPACK_IMPORTED_MODULE_0__["TextureLoader"]().load('/images/eye-real-bump.png');
+      var texture2 = new three__WEBPACK_IMPORTED_MODULE_0__["TextureLoader"]().load('/images/eye4.png');
+      var reflection = new three__WEBPACK_IMPORTED_MODULE_0__["TextureLoader"]().load('/images/refl2.jpg');
+      reflection.format = three__WEBPACK_IMPORTED_MODULE_0__["RGBFormat"];
+      reflection.mapping = three__WEBPACK_IMPORTED_MODULE_0__["SphericalReflectionMapping"];
+      reflection.encoding = three__WEBPACK_IMPORTED_MODULE_0__["sRGBEncoding"];
+
+      texture.onload = function () {
+        reflection.needsUpdate = true;
+      };
 
       var geometry = new three__WEBPACK_IMPORTED_MODULE_0__["SphereGeometry"](2, 64, 64);
       var geometry2 = new three__WEBPACK_IMPORTED_MODULE_0__["SphereGeometry"](1, 64, 64);
-      var material = new three__WEBPACK_IMPORTED_MODULE_0__["MeshPhongMaterial"]({
-        color: 0xaa2547,
-        wireframeLinewidth: 10,
+      var material = new three__WEBPACK_IMPORTED_MODULE_0__["MeshStandardMaterial"]({
+        color: 0xeeeeee,
+        roughness: 0,
         //wireframe: true,
         map: texture,
-        specular: 0x050505,
-        shininess: 100
+        bumpMap: textureBump,
+        normalMap: textureNormal,
+        normalScale: new three__WEBPACK_IMPORTED_MODULE_0__["Vector2"](0.7, 0.7),
+        // bumpMap: textureBump,
+        bumpScale: 1,
+        //specular: 0x050505,
+        // shininess: 100,
+        //emissive: 0xffffff,
+        envMap: reflection //reflectivity: 0,
+
       });
-      var material2 = new three__WEBPACK_IMPORTED_MODULE_0__["MeshPhongMaterial"]({
-        color: 0xaa2547,
+      var material2 = new three__WEBPACK_IMPORTED_MODULE_0__["MeshLambertMaterial"]({
+        color: 0xffffff,
+        roughness: 0,
+        transparent: true,
         wireframeLinewidth: 10,
         //wireframe: true,
-        map: texture2,
+        //map: texture2,
         specular: 0x050505,
-        shininess: 100
+        shininess: 100,
+        //emissive: 0xffffff,
+        envMap: reflection,
+        opacity: 0.5 //reflectivity: 0,
+
       });
       this.mesh = new three__WEBPACK_IMPORTED_MODULE_0__["Mesh"](geometry, material);
-      this.mesh.rotation.y = -1.57; //this.mesh.rotation.y = 1.57;
+      this.mesh.rotation.x = -1.57; //this.mesh.rotation.y = 1.57;
 
       this.mesh.position.x = 0;
       this.mesh.position.y = 0;
@@ -1851,11 +1874,15 @@ __webpack_require__.r(__webpack_exports__);
 
       this.mesh2.position.x = 0;
       this.mesh2.position.y = 0;
-      this.mesh2.position.z = 1.17;
+      this.mesh2.position.z = 1.27;
+      this.mesh.geometry.vertices.forEach(moveVerticles);
+      this.mesh.geometry.verticesNeedUpdate = true;
       var meshes = new three__WEBPACK_IMPORTED_MODULE_0__["Group"]();
       meshes.add(this.mesh);
       meshes.add(this.mesh2);
-      this.scene.add(meshes); // Directional light
+      this.scene.add(meshes); // var light = new Three.AmbientLight( 0x404040 ); // soft white light
+      // this.scene.add( light );
+      // Directional light
       // var directionalLight = new Three.DirectionalLight( 0xffffff, 4 );
       // directionalLight.position.y = -200;
       // directionalLight.position.z = 400;
@@ -1871,8 +1898,18 @@ __webpack_require__.r(__webpack_exports__);
       this.spotLight.shadow.camera.near = 500;
       this.spotLight.shadow.camera.far = 4000;
       this.spotLight.shadow.camera.fov = 30;
-      this.spotLight.intensity = 4.6;
+      this.spotLight.intensity = 1.6;
+      this.spotLight2 = new three__WEBPACK_IMPORTED_MODULE_0__["SpotLight"](0xffffff);
+      this.spotLight2.position.set(-200, 300, 100);
+      this.spotLight2.castShadow = true;
+      this.spotLight2.shadow.mapSize.width = 1024;
+      this.spotLight2.shadow.mapSize.height = 1024;
+      this.spotLight2.shadow.camera.near = 500;
+      this.spotLight2.shadow.camera.far = 4000;
+      this.spotLight2.shadow.camera.fov = 30;
+      this.spotLight2.intensity = 1.6;
       this.scene.add(this.spotLight);
+      this.scene.add(this.spotLight2);
       this.renderer = new three__WEBPACK_IMPORTED_MODULE_0__["WebGLRenderer"]({
         antialias: true,
         alpha: false
@@ -1903,13 +1940,41 @@ __webpack_require__.r(__webpack_exports__);
       function getRndInteger(min, max) {
         return Math.floor(Math.random() * (max - min + 1)) + min;
       }
+
+      function moveVerticles(item, index) {
+        if (index > 3520) {
+          item.set(item.x, -1.77082, item.z);
+        }
+      }
     },
     animate: function animate() {
       requestAnimationFrame(this.animate);
       this.time += 0.01;
+      var time = this.time;
       this.spotLight.position.x = 200 * Math.cos(this.time) + 0;
       this.spotLight.position.z = 200 * Math.sin(this.time) + 0; // These to strings make it work
 
+      this.spotLight2.position.x = 300 * Math.sin(this.time) + 1;
+      this.spotLight2.position.z = 500 * Math.cos(this.time) + 1; // These to strings make it work
+
+      this.mesh.geometry.vertices.forEach(function (item, index) {// if (index > 930 && index < 962 ) {
+        //
+        //     if (item.x > 0 ){
+        //         item.set((Math.sin(time) * 0.5 ) + 0.5, item.y, item.z);
+        //     } else {
+        //         item.set((Math.sin(-time) * 0.5 ) - 0.5, item.y, item.z);
+        //     }
+        //
+        //
+        //     if (item.z > 0 ){
+        //         item.set(item.x, item.y, (Math.sin(time) * 0.5 ) + 0.5);
+        //     } else {
+        //         item.set(item.x, item.y, (Math.sin(-time) * 0.5 ) - 0.5);
+        //     }
+        //
+        // }
+      });
+      this.mesh.geometry.verticesNeedUpdate = true;
       this.renderer.render(this.scene, this.camera);
     }
   },
@@ -2194,6 +2259,174 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     this.transformX();
     console.log('Component mounted.');
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Playground.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Playground.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var three__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! three */ "./node_modules/three/build/three.module.js");
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      camera: null,
+      scene: null,
+      renderer: null,
+      particleCount: null,
+      particleSystem: null,
+      particles: null,
+      pMaterial: null,
+      spotlight: null,
+      time: 0
+    };
+  },
+  methods: {
+    init: function init() {
+      var container = document.getElementById('animated-background');
+      this.camera = new three__WEBPACK_IMPORTED_MODULE_0__["PerspectiveCamera"](90, container.clientWidth / container.clientHeight, 0.01, 500);
+      this.camera.position.z = 7;
+      this.scene = new three__WEBPACK_IMPORTED_MODULE_0__["Scene"]();
+      var texture = new three__WEBPACK_IMPORTED_MODULE_0__["TextureLoader"]().load('/images/dick.png'); // create the particle variables
+
+      this.particleCount = 180;
+      this.particles = new three__WEBPACK_IMPORTED_MODULE_0__["Geometry"]();
+      this.pMaterial = new three__WEBPACK_IMPORTED_MODULE_0__["PointsMaterial"]({
+        color: 0xFFFFFF,
+        size: 20,
+        map: texture,
+        blending: three__WEBPACK_IMPORTED_MODULE_0__["AdditiveBlending"],
+        transparent: true
+      }); // now create the individual particles
+
+      for (var p = 0; p < this.particleCount; p++) {
+        // create a particle with random
+        // position values, -250 -> 250
+        // var pX = Math.random() * 500 - 250,
+        //     pY = Math.random() * 500 - 250,
+        //     pZ = Math.random() * 500 - 250,
+        var pX = getRndInteger(-250, 250),
+            pY = getRndInteger(-250, 250),
+            pZ = getRndInteger(-250, 250),
+            particle = new three__WEBPACK_IMPORTED_MODULE_0__["Vector3"](pX, pY, pZ);
+        particle.velocity = new three__WEBPACK_IMPORTED_MODULE_0__["Vector3"](getRndInteger(-1, 1), // x
+        getRndInteger(-1, 1), // y: random vel
+        getRndInteger(-1, 1)); // add it to the geometry
+
+        this.particles.vertices.push(particle);
+      } // create the particle system
+
+
+      this.particleSystem = new three__WEBPACK_IMPORTED_MODULE_0__["ParticleSystem"](this.particles, this.pMaterial);
+      this.particleSystem.sortParticles = true; // add it to the scene
+
+      this.scene.add(this.particleSystem); // Directional light
+      // var directionalLight = new Three.DirectionalLight( 0xffffff, 4 );
+      // directionalLight.position.y = -200;
+      // directionalLight.position.z = 400;
+      // directionalLight.position.x = -300;
+      // this.scene.add( directionalLight );
+      // Spotlight
+      // this.spotLight = new Three.SpotLight( 0xffffff );
+      // this.spotLight.position.set( -200, 300, 100 );
+      //
+      // this.spotLight.castShadow = true;
+      //
+      // this.spotLight.shadow.mapSize.width = 1024;
+      // this.spotLight.shadow.mapSize.height = 1024;
+      //
+      // this.spotLight.shadow.camera.near = 500;
+      // this.spotLight.shadow.camera.far = 4000;
+      // this.spotLight.shadow.camera.fov = 30;
+      // this.spotLight.intensity = 4.6;
+      //
+      // this.scene.add( this.spotLight );
+
+      this.renderer = new three__WEBPACK_IMPORTED_MODULE_0__["WebGLRenderer"]({
+        antialias: true,
+        alpha: true
+      });
+      this.renderer.setSize(container.clientWidth, container.clientHeight);
+      container.appendChild(this.renderer.domElement);
+      var renderer = this.renderer;
+      var camera = this.camera; //let mesh = this.mesh;
+      //let mesh = meshes;
+
+      window.addEventListener('resize', function () {
+        var width = container.clientWidth,
+            height = container.clientHeight;
+        renderer.setSize(width, height);
+        camera.aspect = width / height;
+        camera.updateProjectionMatrix();
+      });
+      var rotX = camera.rotation.x,
+          rotY = camera.rotation.y;
+      window.addEventListener('mousemove', function () {
+        var x = event.clientX,
+            y = event.clientY;
+        camera.rotation.y = rotY + (x - container.clientWidth / 2) / 700;
+        camera.rotation.x = rotX + (y - container.clientHeight / 2) / 700;
+      });
+
+      function getRndInteger(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+      }
+    },
+    animate: function animate() {
+      requestAnimationFrame(this.animate); // this.time += 0.01
+      // this.spotLight.position.x = 200*Math.cos(this.time) + 0;
+      // this.spotLight.position.z = 200*Math.sin(this.time) + 0; // These to strings make it work
+
+      var pCount = this.particleCount;
+
+      while (pCount--) {
+        // get the particle
+        var particle = this.particles.vertices[pCount];
+        console.log(particle.velocity); // check if we need to reset
+
+        if (particle.y < -200) {
+          particle.y = 200;
+          particle.z = getRndInteger(-250, 250);
+          particle.x = getRndInteger(-250, 250);
+          particle.velocity.y = 0;
+        } // update the velocity with
+        // a splat of randomniz
+
+
+        particle.velocity.y -= Math.random() * .05; // and the position
+
+        particle.add(particle.velocity);
+      } // flag to the particle system
+      // that we've changed its vertices.
+
+
+      this.particleSystem.geometry.verticesNeedUpdate = true;
+      this.renderer.render(this.scene, this.camera);
+
+      function getRndInteger(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+      }
+    }
+  },
+  mounted: function mounted() {
+    this.init();
+    this.animate();
   }
 });
 
@@ -86885,6 +87118,33 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Playground.vue?vue&type=template&id=e0cef634&":
+/*!*************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Playground.vue?vue&type=template&id=e0cef634& ***!
+  \*************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", {
+    staticClass: "animated-background",
+    attrs: { id: "animated-background" }
+  })
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js":
 /*!********************************************************************!*\
   !*** ./node_modules/vue-loader/lib/runtime/componentNormalizer.js ***!
@@ -101758,6 +102018,7 @@ Vue.use(vue_axios__WEBPACK_IMPORTED_MODULE_1___default.a, axios__WEBPACK_IMPORTE
 Vue.component('example-component', __webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue")["default"]);
 Vue.component('menu-component', __webpack_require__(/*! ./components/Menu.vue */ "./resources/js/components/Menu.vue")["default"]);
 Vue.component('animated-background-component', __webpack_require__(/*! ./components/AnimatedBackground.vue */ "./resources/js/components/AnimatedBackground.vue")["default"]);
+Vue.component('playground-component', __webpack_require__(/*! ./components/Playground.vue */ "./resources/js/components/Playground.vue")["default"]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -102413,6 +102674,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Menu_vue_vue_type_template_id_7fa2c4ca___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Menu_vue_vue_type_template_id_7fa2c4ca___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/Playground.vue":
+/*!************************************************!*\
+  !*** ./resources/js/components/Playground.vue ***!
+  \************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Playground_vue_vue_type_template_id_e0cef634___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Playground.vue?vue&type=template&id=e0cef634& */ "./resources/js/components/Playground.vue?vue&type=template&id=e0cef634&");
+/* harmony import */ var _Playground_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Playground.vue?vue&type=script&lang=js& */ "./resources/js/components/Playground.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Playground_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Playground_vue_vue_type_template_id_e0cef634___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Playground_vue_vue_type_template_id_e0cef634___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/Playground.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/Playground.vue?vue&type=script&lang=js&":
+/*!*************************************************************************!*\
+  !*** ./resources/js/components/Playground.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Playground_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./Playground.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Playground.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Playground_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/Playground.vue?vue&type=template&id=e0cef634&":
+/*!*******************************************************************************!*\
+  !*** ./resources/js/components/Playground.vue?vue&type=template&id=e0cef634& ***!
+  \*******************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Playground_vue_vue_type_template_id_e0cef634___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./Playground.vue?vue&type=template&id=e0cef634& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Playground.vue?vue&type=template&id=e0cef634&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Playground_vue_vue_type_template_id_e0cef634___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Playground_vue_vue_type_template_id_e0cef634___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

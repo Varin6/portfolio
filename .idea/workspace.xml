@@ -2,14 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a7d30500-cd0d-4c87-9e30-34ddfae69db9" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/resources/js/components/Playground.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/app.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/AnimatedBackground.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/AnimatedBackground.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/sass/app.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/app.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app.blade.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -21,13 +18,13 @@
     <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.5045816">
+    <splitter split-orientation="horizontal" split-proportion="0.5669725">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/resources/views/welcome.blade.php">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="293">
+                <state relative-caret-position="816">
                   <caret line="48" selection-start-line="48" selection-end-line="48" />
                 </state>
               </provider>
@@ -36,7 +33,7 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/resources/views/app.blade.php">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="374">
+                <state relative-caret-position="323">
                   <caret line="19" column="12" selection-start-line="19" selection-start-column="12" selection-end-line="19" selection-end-column="12" />
                 </state>
               </provider>
@@ -93,7 +90,7 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/vendor/laravel/framework/src/Illuminate/Foundation/helpers.php">
               <provider selected="true" editor-type-id="text-editor">
-                <state>
+                <state relative-caret-position="476">
                   <caret line="145" column="13" selection-start-line="145" selection-start-column="13" selection-end-line="145" selection-end-column="13" />
                 </state>
               </provider>
@@ -120,7 +117,7 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/resources/views/layouts/menu.blade.php">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="221">
+                <state relative-caret-position="187">
                   <caret line="11" selection-end-line="12" selection-end-column="6" />
                 </state>
               </provider>
@@ -129,7 +126,7 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/webpack.mix.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state>
+                <state relative-caret-position="238">
                   <caret line="14" column="51" selection-start-line="14" selection-start-column="51" selection-end-line="14" selection-end-column="51" />
                 </state>
               </provider>
@@ -138,8 +135,8 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/public/js/app.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="102">
-                  <caret line="102757" selection-start-line="102757" selection-end-line="102757" />
+                <state relative-caret-position="1744659">
+                  <caret line="103879" selection-start-line="103879" selection-end-line="103879" />
                   <folding>
                     <element signature="n#!!doc" expanded="true" />
                   </folding>
@@ -150,8 +147,29 @@
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/resources/js/components/AnimatedBackground.vue">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="421">
-                  <caret line="216" column="67" selection-start-line="216" selection-start-column="67" selection-end-line="216" selection-end-column="67" />
+                <state relative-caret-position="353">
+                  <caret line="249" column="19" lean-forward="true" selection-start-line="238" selection-start-column="16" selection-end-line="249" selection-end-column="19" />
+                  <folding>
+                    <element signature="e#115#146#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/node_modules/three/src/geometries/SphereGeometry.d.ts">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="109">
+                  <caret line="37" column="83" selection-start-line="37" selection-start-column="72" selection-end-line="37" selection-end-column="83" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/node_modules/three/src/core/Geometry.d.ts">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="1496">
+                  <caret line="101" column="2" selection-start-line="101" selection-start-column="2" selection-end-line="101" selection-end-column="2" />
                 </state>
               </provider>
             </entry>
@@ -172,8 +190,8 @@
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/resources/sass/app.scss">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="375">
-                  <caret line="38" column="4" selection-start-line="38" selection-start-column="4" selection-end-line="38" selection-end-column="4" />
+                <state relative-caret-position="341">
+                  <caret line="36" selection-start-line="36" selection-end-line="41" selection-end-column="1" />
                 </state>
               </provider>
             </entry>
@@ -181,7 +199,7 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/resources/sass/_home.scss">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-1037">
+                <state relative-caret-position="340">
                   <caret line="20" column="4" selection-start-line="20" selection-start-column="4" selection-end-line="20" selection-end-column="4" />
                 </state>
               </provider>
@@ -190,7 +208,7 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/resources/sass/_menu.scss">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="575">
+                <state relative-caret-position="1649">
                   <caret line="97" column="25" selection-start-line="97" selection-start-column="25" selection-end-line="97" selection-end-column="25" />
                 </state>
               </provider>
@@ -204,12 +222,8 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/resources/js/app.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-448">
+                <state relative-caret-position="595">
                   <caret line="40" selection-start-line="40" selection-end-line="40" />
-                  <folding>
-                    <element signature="e#823#856#0" expanded="true" />
-                    <element signature="e#963#1004#0" expanded="true" />
-                  </folding>
                 </state>
               </provider>
             </entry>
@@ -258,6 +272,8 @@
       <find>vect</find>
       <find>cubeShader</find>
       <find>ambie</find>
+      <find>renderer</find>
+      <find>faceVertexUvs</find>
     </findStrings>
     <replaceStrings>
       <replace>iconIsHovering</replace>
@@ -517,7 +533,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="93661000" />
+    <option name="totallyTimeSpent" value="105316000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -532,11 +548,10 @@
     <frame x="-8" y="-8" width="1936" height="1066" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.12739871" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.12846482" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
-      <window_info anchor="bottom" id="TypeScript" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3290461" />
       <window_info anchor="bottom" id="Run" order="2" />
@@ -549,6 +564,7 @@
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info active="true" anchor="bottom" id="Terminal" order="11" visible="true" weight="0.3290461" />
+      <window_info anchor="bottom" id="TypeScript" order="12" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -563,24 +579,17 @@
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/public/js/general.js" />
-    <entry file="file://$PROJECT_DIR$/vendor/laravel/framework/src/Illuminate/Foundation/helpers.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret line="145" column="13" selection-start-line="145" selection-start-column="13" selection-end-line="145" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/webpack.mix.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
+        <state relative-caret-position="238">
           <caret line="14" column="51" selection-start-line="14" selection-start-column="51" selection-end-line="14" selection-end-column="51" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/js/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="102757" selection-start-line="102757" selection-end-line="102757" />
+        <state relative-caret-position="1744659">
+          <caret line="103879" selection-start-line="103879" selection-end-line="103879" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
@@ -599,7 +608,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/layouts/menu.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
+        <state relative-caret-position="187">
           <caret line="11" selection-end-line="12" selection-end-column="6" />
         </state>
       </provider>
@@ -627,7 +636,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/sass/_menu.scss">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="575">
+        <state relative-caret-position="1649">
           <caret line="97" column="25" selection-start-line="97" selection-start-column="25" selection-end-line="97" selection-end-column="25" />
         </state>
       </provider>
@@ -672,18 +681,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/js/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-448">
+        <state relative-caret-position="595">
           <caret line="40" selection-start-line="40" selection-end-line="40" />
-          <folding>
-            <element signature="e#823#856#0" expanded="true" />
-            <element signature="e#963#1004#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/sass/_home.scss">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1037">
+        <state relative-caret-position="340">
           <caret line="20" column="4" selection-start-line="20" selection-start-column="4" selection-end-line="20" selection-end-column="4" />
         </state>
       </provider>
@@ -707,7 +712,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/welcome.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="293">
+        <state relative-caret-position="816">
           <caret line="48" selection-start-line="48" selection-end-line="48" />
         </state>
       </provider>
@@ -721,8 +726,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/app.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
+        <state relative-caret-position="323">
           <caret line="19" column="12" selection-start-line="19" selection-start-column="12" selection-end-line="19" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/sass/app.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="341">
+          <caret line="36" selection-start-line="36" selection-end-line="41" selection-end-column="1" />
         </state>
       </provider>
     </entry>
@@ -733,17 +745,27 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/sass/app.scss">
+    <entry file="file://$PROJECT_DIR$/vendor/laravel/framework/src/Illuminate/Foundation/helpers.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
-          <caret line="38" column="4" selection-start-line="38" selection-start-column="4" selection-end-line="38" selection-end-column="4" />
+        <state relative-caret-position="476">
+          <caret line="145" column="13" selection-start-line="145" selection-start-column="13" selection-end-line="145" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/three/src/geometries/SphereGeometry.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="109">
+          <caret line="37" column="83" selection-start-line="37" selection-start-column="72" selection-end-line="37" selection-end-column="83" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/js/components/AnimatedBackground.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="421">
-          <caret line="216" column="67" selection-start-line="216" selection-start-column="67" selection-end-line="216" selection-end-column="67" />
+        <state relative-caret-position="353">
+          <caret line="249" column="19" lean-forward="true" selection-start-line="238" selection-start-column="16" selection-end-line="249" selection-end-column="19" />
+          <folding>
+            <element signature="e#115#146#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

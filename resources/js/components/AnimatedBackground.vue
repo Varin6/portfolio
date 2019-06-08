@@ -8,7 +8,9 @@
 
 <script>
 
-    import * as Three from 'three'
+    import * as Three from 'three';
+    import * as OrbitControls from 'three-orbitcontrols';
+    //const OrbitControls = require('three-orbitcontrols');
 
     export default {
         data() {
@@ -27,6 +29,9 @@
         },
         methods:{
             init: function() {
+
+
+
                 let container = document.getElementById('animated-background');
 
                 this.camera = new Three.PerspectiveCamera(75, container.clientWidth/container.clientHeight, 0.01, 20);
@@ -39,9 +44,12 @@
                 let textureBump = new Three.TextureLoader().load( '/images/eye-real-bump.png');
                 let texture2 = new Three.TextureLoader().load( '/images/eye4.png');
                 let reflection = new Three.TextureLoader().load( '/images/refl2.jpg');
+
                 reflection.format = Three.RGBFormat;
                 reflection.mapping = Three.SphericalReflectionMapping;
                 reflection.encoding = Three.sRGBEncoding;
+
+
                 texture.onload = function()  {
                     reflection.needsUpdate = true;
                 };
@@ -114,8 +122,8 @@
 
                     this.scene.add(meshes);
 
-                // var light = new Three.AmbientLight( 0x404040 ); // soft white light
-                // this.scene.add( light );
+                let light = new Three.AmbientLight( 0x404040 ); // soft white light
+                this.scene.add( light );
 
 
                 // Directional light
@@ -164,9 +172,15 @@
 
 
 
-                this.renderer = new Three.WebGLRenderer({antialias: true, alpha: false});
+                this.renderer = new Three.WebGLRenderer({antialias: true, alpha: true});
                 this.renderer.setSize(container.clientWidth, container.clientHeight);
                 container.appendChild(this.renderer.domElement);
+
+                let controls = new OrbitControls( this.camera, this.renderer.domElement );
+                //controls.addEventListener( 'change', this.renderer );
+                controls.enableDamping = true;
+                controls.dampingFactor = 0.25;
+                controls.enableZoom = true;
 
                 let renderer = this.renderer;
                 let camera = this.camera;
@@ -205,6 +219,11 @@
                     }
                 }
 
+
+
+
+
+
             },
             animate: function() {
                 requestAnimationFrame(this.animate);
@@ -217,28 +236,74 @@
                 this.spotLight2.position.z = 500*Math.cos(this.time) + 1; // These to strings make it work
 
 
+                this.mesh.geometry.faceVertexUvs[0].forEach(function (item, index) {
+
+                    if (index > 7103  ) {
+
+                        item.forEach(function (item2, index2) {
+
+                            item2.x = item2.x - Math.sin(time)*0.0003;
+                            item2.y = item2.y - Math.sin(time)*0.0003;
+
+                        });
+                    }
+                });
+
+
+
 
                 this.mesh.geometry.vertices.forEach(function (item, index) {
 
-
-                    // if (index > 930 && index < 962 ) {
+                    // if (index > 3520  ) {
                     //
-                    //     if (item.x > 0 ){
-                    //         item.set((Math.sin(time) * 0.5 ) + 0.5, item.y, item.z);
-                    //     } else {
-                    //         item.set((Math.sin(-time) * 0.5 ) - 0.5, item.y, item.z);
-                    //     }
+                    //     let d2 = (item.x ^ 2 + item.z ^ 2);
                     //
+                    //     if (d2 < 1 * 1) {
+                    //         let d = Math.sqrt(d2);
+                    //         let stretch = (1 / 1.5) * d * (2 - d);
+                    //         let stretchX = item.x * d;
+                    //         let stretchZ = item.z * d;
                     //
-                    //     if (item.z > 0 ){
-                    //         item.set(item.x, item.y, (Math.sin(time) * 0.5 ) + 0.5);
-                    //     } else {
-                    //         item.set(item.x, item.y, (Math.sin(-time) * 0.5 ) - 0.5);
+                    //         item.set(stretchX, item.y, stretchZ);
                     //     }
                     //
                     // }
+
+                    // let d2 = (item.x^2 + item.y^2);
+                    // if (d2 < R*R) {
+                    //     let d = Math.sqrt(d2);
+                    //     let stretch = (r / rt) * d * (R - d);
+                    //     let stretchX = item.x / d;
+                    //     let stretchY = item.y / d;
+                    // }
+
+
+
+
+                    if (index > 3520  ) {
+
+
+                        // let d2 = (item.x ^ 2 + item.z ^ 2);
+                        // let d = Math.sqrt(d2);
+                        //
+                        // if (item.z < 0 ){
+                        //     item.set((Math.sin(time) * 200 ), item.y, (Math.sin(time) * 200));
+                        // }
+                        // else {
+                        //     item.set((Math.sin(-time) / d ) - 0.1, item.y, item.z);
+                        // }
+
+
+                        // if (item.z > 0 ){
+                        //     item.set(item.x, item.y, (Math.sin(time) * 0.1 ) + 0.1);
+                        // } else {
+                        //     item.set(item.x, item.y, (Math.sin(-time) * 0.1 ) - 0.1);
+                        // }
+
+                    }
                 });
                 this.mesh.geometry.verticesNeedUpdate = true;
+                this.mesh.geometry.uvsNeedUpdate = true;
 
 
                 this.renderer.render(this.scene, this.camera);

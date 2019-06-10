@@ -1813,20 +1813,44 @@ __webpack_require__.r(__webpack_exports__);
       mesh2: null,
       spotlight: null,
       spotLight2: null,
-      time: 0
+      time: 0,
+      vertices: null,
+      geometryCopy: null
     };
   },
   methods: {
     init: function init() {
+      /**
+       * declare container
+       */
       var container = document.getElementById('animated-background');
+      /**
+       * set up Camera
+       * @type {PerspectiveCamera}
+       */
+
       this.camera = new three__WEBPACK_IMPORTED_MODULE_0__["PerspectiveCamera"](75, container.clientWidth / container.clientHeight, 0.01, 20);
       this.camera.position.z = 7;
+      /**
+       * Set up Scene
+       * @type {Scene}
+       */
+
       this.scene = new three__WEBPACK_IMPORTED_MODULE_0__["Scene"]();
+      /**
+       * load textures
+       * @type {Texture}
+       */
+
       var texture = new three__WEBPACK_IMPORTED_MODULE_0__["TextureLoader"]().load('/images/eye-real-pupil.png');
       var textureNormal = new three__WEBPACK_IMPORTED_MODULE_0__["TextureLoader"]().load('/images/eye-real-normal.png');
       var textureBump = new three__WEBPACK_IMPORTED_MODULE_0__["TextureLoader"]().load('/images/eye-real-bump.png');
-      var texture2 = new three__WEBPACK_IMPORTED_MODULE_0__["TextureLoader"]().load('/images/eye4.png');
       var reflection = new three__WEBPACK_IMPORTED_MODULE_0__["TextureLoader"]().load('/images/refl2.jpg');
+      /**
+       * set up reflections
+       * @type {PixelFormat}
+       */
+
       reflection.format = three__WEBPACK_IMPORTED_MODULE_0__["RGBFormat"];
       reflection.mapping = three__WEBPACK_IMPORTED_MODULE_0__["SphericalReflectionMapping"];
       reflection.encoding = three__WEBPACK_IMPORTED_MODULE_0__["sRGBEncoding"];
@@ -1834,19 +1858,32 @@ __webpack_require__.r(__webpack_exports__);
       texture.onload = function () {
         reflection.needsUpdate = true;
       };
+      /**
+       * set up Geometries
+       * @type {SphereGeometry}
+       */
+
 
       var geometry = new three__WEBPACK_IMPORTED_MODULE_0__["SphereGeometry"](2, 64, 64);
-      var geometry2 = new three__WEBPACK_IMPORTED_MODULE_0__["SphereGeometry"](1, 64, 64);
+      var geometry3 = new three__WEBPACK_IMPORTED_MODULE_0__["SphereGeometry"](2, 64, 64);
+      var geometry2 = new three__WEBPACK_IMPORTED_MODULE_0__["SphereGeometry"](1.6, 64, 64);
+      this.geometryCopy = geometry3;
+      console.log(geometry3);
+      /**
+       * set up Materials
+       * @type {MeshStandardMaterial}
+       */
+
       var material = new three__WEBPACK_IMPORTED_MODULE_0__["MeshStandardMaterial"]({
         color: 0xeeeeee,
         roughness: 0,
         //wireframe: true,
         map: texture,
-        bumpMap: textureBump,
+        //bumpMap: textureBump,
         normalMap: textureNormal,
         normalScale: new three__WEBPACK_IMPORTED_MODULE_0__["Vector2"](0.7, 0.7),
         // bumpMap: textureBump,
-        bumpScale: 1,
+        //bumpScale: 1,
         //specular: 0x050505,
         // shininess: 100,
         //emissive: 0xffffff,
@@ -1857,7 +1894,6 @@ __webpack_require__.r(__webpack_exports__);
         color: 0xffffff,
         roughness: 0,
         transparent: true,
-        wireframeLinewidth: 10,
         //wireframe: true,
         //map: texture2,
         specular: 0x050505,
@@ -1867,6 +1903,11 @@ __webpack_require__.r(__webpack_exports__);
         opacity: 0.5 //reflectivity: 0,
 
       });
+      /**
+       * set up Meshes
+       * @type {Mesh}
+       */
+
       this.mesh = new three__WEBPACK_IMPORTED_MODULE_0__["Mesh"](geometry, material);
       this.mesh.rotation.x = -1.57; //this.mesh.rotation.y = 1.57;
 
@@ -1878,22 +1919,43 @@ __webpack_require__.r(__webpack_exports__);
 
       this.mesh2.position.x = 0;
       this.mesh2.position.y = 0;
-      this.mesh2.position.z = 1.27;
+      this.mesh2.position.z = 0.44;
+      /**
+       * flatten the iris of the eye
+       */
+
       this.mesh.geometry.vertices.forEach(moveVerticles);
       this.mesh.geometry.verticesNeedUpdate = true;
+      /**
+       * Add meshes to one group
+       * @type {Group}
+       */
+
       var meshes = new three__WEBPACK_IMPORTED_MODULE_0__["Group"]();
       meshes.add(this.mesh);
       meshes.add(this.mesh2);
       this.scene.add(meshes);
-      var light = new three__WEBPACK_IMPORTED_MODULE_0__["AmbientLight"](0x404040); // soft white light
+      /**
+       * Ambient light
+       * @type {AmbientLight}
+       */
+      // let light = new Three.AmbientLight( 0x404040 ); // soft white light
+      // this.scene.add( light );
 
-      this.scene.add(light); // Directional light
+      /**
+       * Directional Light
+       * @type {DirectionalLight}
+       */
       // var directionalLight = new Three.DirectionalLight( 0xffffff, 4 );
       // directionalLight.position.y = -200;
       // directionalLight.position.z = 400;
       // directionalLight.position.x = -300;
       // this.scene.add( directionalLight );
-      // Spotlight
+
+      /**
+       * Set up spotlights
+       * @type {SpotLight}
+       */
 
       this.spotLight = new three__WEBPACK_IMPORTED_MODULE_0__["SpotLight"](0xffffff);
       this.spotLight.position.set(-200, 300, 100);
@@ -1915,12 +1977,22 @@ __webpack_require__.r(__webpack_exports__);
       this.spotLight2.intensity = 1.6;
       this.scene.add(this.spotLight);
       this.scene.add(this.spotLight2);
+      /**
+       * set up Renderer
+       * @type {WebGLRenderer}
+       */
+
       this.renderer = new three__WEBPACK_IMPORTED_MODULE_0__["WebGLRenderer"]({
         antialias: true,
         alpha: true
       });
       this.renderer.setSize(container.clientWidth, container.clientHeight);
       container.appendChild(this.renderer.domElement);
+      /**
+       * set up OrbitControls
+       * @type {*|exports.default|THREE.OrbitControls}
+       */
+
       var controls = new three_orbitcontrols__WEBPACK_IMPORTED_MODULE_1__(this.camera, this.renderer.domElement); //controls.addEventListener( 'change', this.renderer );
 
       controls.enableDamping = true;
@@ -1930,6 +2002,10 @@ __webpack_require__.r(__webpack_exports__);
       var camera = this.camera; //let mesh = this.mesh;
 
       var mesh = meshes;
+      /**
+       * Set up canvas resize on window resize
+       */
+
       window.addEventListener('resize', function () {
         var width = container.clientWidth,
             height = container.clientHeight;
@@ -1937,44 +2013,195 @@ __webpack_require__.r(__webpack_exports__);
         camera.aspect = width / height;
         camera.updateProjectionMatrix();
       });
+      /**
+       * set up eye movement dependent on mouse position
+       * @type {number}
+       */
+
       var rotX = mesh.rotation.x,
           rotY = mesh.rotation.y;
       window.addEventListener('mousemove', function () {
         var x = event.clientX,
             y = event.clientY;
         mesh.rotation.y = rotY + (x - container.clientWidth / 2) / 700;
-        mesh.rotation.x = rotX + (y - container.clientHeight / 2) / 700; // mesh.rotation.z = y/7000;
-        // mesh.rotation.z = x/7000;
+        mesh.rotation.x = rotX + (y - container.clientHeight / 2) / 700;
       });
+      /**
+       * Generate random integer between numbers
+       * @param min
+       * @param max
+       * @returns {*}
+       */
 
       function getRndInteger(min, max) {
         return Math.floor(Math.random() * (max - min + 1)) + min;
       }
+      /**
+       * Move vertices in the iris to flatten it
+       * @param item
+       * @param index
+       */
+
 
       function moveVerticles(item, index) {
         if (index > 3520) {
           item.set(item.x, -1.77082, item.z);
         }
       }
+
+      var d2 = 0;
+      var d = 0;
+      this.vertices = this.mesh.geometry.vertices.slice(); // this.mesh.geometry.vertices.forEach(function (item, index) {
+      //
+      //     if (index > 3520  ) {
+      //
+      //             d2 = Math.pow(item.x, 2) + Math.pow(item.z, 2);
+      //             d = Math.sqrt(d2);
+      //
+      //             // console.log('----');
+      //             // console.log(item2.x);
+      //             // console.log(item2.y);
+      //             // console.log(d);
+      //             // console.log(d2);
+      //
+      //
+      //             item.x = item.x   * (d*0.5);
+      //             item.z = item.z  * (d* 0.5);
+      //
+      //
+      //     }
+      // });
+
+      this.mesh.geometry.vertices.forEach(function (item, index) {
+        if (index > 3520) {
+          d2 = Math.pow(item.x, 2) + Math.pow(item.z, 2);
+          d = Math.sqrt(d2); // console.log('----');
+          // console.log(item2.x);
+          // console.log(item2.y);
+          // console.log(d);
+          // console.log(d2);
+          //console.log(vertices[3560].x);
+          // console.log(d);
+
+          if (index != 4033) {// item.x = item.x / ((1/(-d-0.5)) + 2);
+            // item.z = item.z / ((1/(-d-0.5)) + 2);
+            // console.log(item.x);
+            // console.log(item.z);
+          }
+        }
+      });
+      this.mesh.geometry.uvsNeedUpdate = true;
+      this.mesh.geometry.verticesNeedUpdate = true;
     },
     animate: function animate() {
+      var vertices = this.geometryCopy.vertices;
+      var d2 = 0;
+      var d = 0;
       requestAnimationFrame(this.animate);
+      /**
+       * set up time changes
+       * @type {number}
+       */
+
       this.time += 0.01;
       var time = this.time;
+      /**
+       * Spotlight movement
+       * @type {number}
+       */
+
       this.spotLight.position.x = 200 * Math.cos(this.time) + 0;
       this.spotLight.position.z = 200 * Math.sin(this.time) + 0; // These to strings make it work
 
       this.spotLight2.position.x = 300 * Math.sin(this.time) + 1;
       this.spotLight2.position.z = 500 * Math.cos(this.time) + 1; // These to strings make it work
 
+      this.mesh.geometry.vertices.forEach(function (item, index) {
+        if (index > 3520) {
+          d2 = Math.pow(vertices[index].x, 2) + Math.pow(vertices[index].z, 2);
+          d = Math.sqrt(d2);
+          var stretch = 0.47 * d * (3 - d);
+
+          if (index == 3530) {} // console.log(d);
+          // console.log((d/0.75+2));
+          // console.log(item.x);
+          // console.log(item.z);
+          // console.log(vertices[index].x * (d/0.75+2) );
+          // console.log(vertices[index].z * (d/0.75+2) );
+          // console.log('------------');
+          // console.log('----');
+          // console.log(item2.x);
+          // console.log(item2.y);
+          // console.log(d);
+          // console.log(d2);
+          //console.log(vertices[3560].x);
+          // console.log(d);
+
+
+          if (index != 4033) {
+            // item.x = vertices[index].x / ( 1 + ( (d/0.75+1) * (Math.sin(time)/2+1.5) ) );
+            // item.z = vertices[index].z / ( 1 + ( (d/0.75+1) * (Math.sin(time)/2+1.5) ) );
+            // let sin = Math.sin(time)/2+1.5;
+            var sin = 4 * Math.cos(time * 2) + 4; // let formula = (-(d*3/0.75) + 4);
+
+            var formula = Math.sqrt((0.76 + sin) / (d + sin)); // item.x = vertices[index].x * ( (-(((sin) * d)/0.75) + (1 + sin))  );
+            // item.z = vertices[index].z * ( (-(((sin) * d)/0.75) + (1 + sin))  );
+            //if (formula >= 1) {
+
+            item.x = vertices[index].x * formula;
+            item.z = vertices[index].z * formula; //}
+            // item.x = vertices[index].x / (0.1 + (d)) * ((Math.sin(time)/4) + 0.75);
+            // item.z = vertices[index].z / (0.1 + (d)) * ((Math.sin(time)/4) + 0.75);
+            // item.x = vertices[index].x / ((1/(-d-0.5)) + 2) * ((Math.sin(time)+1.5)/4) * 5;
+            // item.z = vertices[index].z / ((1/(-d-0.5)) + 2) * ((Math.sin(time)+1.5)/4) * 5;
+          } // if(index == 3525 || index == 4020) {
+          //     console.log('no: ' + index + '------------' );
+          //     console.log('x: ' + item.x);
+          //     console.log('z: ' + item.z);
+          // }
+
+        }
+      });
       this.mesh.geometry.faceVertexUvs[0].forEach(function (item, index) {
         if (index > 7103) {
           item.forEach(function (item2, index2) {
-            item2.x = item2.x - Math.sin(time) * 0.0003;
-            item2.y = item2.y - Math.sin(time) * 0.0003;
+            if (index2 != 2) {// item2.x = item2.x - Math.sin(time)*0.0003;
+              // item2.y = item2.y - Math.sin(time)*0.0003;
+              // item2.x = 1;
+              // item2.y = 0;
+            }
           });
         }
-      });
+      }); // let x = 0;
+      // this.mesh.geometry.faceVertexUvs[0].forEach(function(item, index){
+      //     // item[1].x = 0 + Math.sin(time);
+      //     // item[1].y = 0 + Math.sin(time);
+      //     // item[0].x = 0 + Math.sin(time);
+      //     // item[0].y = 0 + Math.sin(time);
+      //
+      //     x = x + 0.000001;
+      //
+      //
+      //     if (index > 7103 && index < 7232) {
+      //
+      //         item[1].x = item[1].x + time * (0.0003 + x);
+      //         item[1].y = item[1].y + time * (0.0003 + x);
+      //         item[0].x = item[0].x + time * (0.0003 + x);
+      //         item[0].y = item[0].y + time * (0.0003 + x);
+      //         item[2].x = item[2].x + time * (0.0003 + x);
+      //         item[2].y = item[2].y + time * (0.0003 + x);
+      //
+      //         // item[1].x += 0.0001 ;
+      //         // item[1].y += 0.0001 ;
+      //         // item[0].x += 0.0001 ;
+      //         // item[0].y += 0.0001 ;
+      //         // item[2].x += 0.0001 ;
+      //         // item[2].y += 0.0001 ;
+      //
+      //     }
+      //
+      // });
+
       this.mesh.geometry.vertices.forEach(function (item, index) {
         // if (index > 3520  ) {
         //

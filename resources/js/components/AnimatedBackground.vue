@@ -10,6 +10,9 @@
 
     import * as Three from 'three';
     import * as OrbitControls from 'three-orbitcontrols';
+    import * as dat from 'dat.gui';
+
+
     //const OrbitControls = require('three-orbitcontrols');
 
     export default {
@@ -25,8 +28,13 @@
                 spotLight2: null,
                 time: 0,
                 vertices: null,
-                geometryCopy: null
-
+                geometryCopy: null,
+                gui: new dat.GUI({
+                    height : 5 * 32 - 1
+                }),
+                params: {
+                    multiplier: 5
+                },
             }
         },
         methods:{
@@ -62,7 +70,7 @@
                  */
 
                 let texture = new Three.TextureLoader().load( '/images/eye-real-pupil.png');
-                let textureNormal = new Three.TextureLoader().load( '/images/eye-real-normal.png');
+                let textureNormal = new Three.TextureLoader().load( '/images/eye-real-normal2.png');
                 let textureBump = new Three.TextureLoader().load( '/images/eye-real-bump.png');
                 let reflection = new Three.TextureLoader().load( '/images/refl2.jpg');
 
@@ -100,31 +108,30 @@
 
                 let material = new Three.MeshStandardMaterial({
                     color: 0xeeeeee,
-                    roughness: 0,
+                    roughness: 0.1,
                     //wireframe: true,
                     map: texture,
 
                     //bumpMap: textureBump,
                     normalMap: textureNormal,
-                    normalScale : new Three.Vector2(0.7,0.7),
+                    normalScale : new Three.Vector2(0.8,0.8),
                    // bumpMap: textureBump,
                     //bumpScale: 1,
                     //specular: 0x050505,
                    // shininess: 100,
                     //emissive: 0xffffff,
                     envMap: reflection,
-                    //reflectivity: 0,
+                    envMapIntensity: 0.5,
+                    metalness: 0.6
+
 
                 });
 
                 let material2 = new Three.MeshLambertMaterial({
                     color: 0xffffff,
-                    roughness: 0,
                     transparent: true,
                     //wireframe: true,
                     //map: texture2,
-                    specular: 0x050505,
-                    shininess: 100,
                     //emissive: 0xffffff,
                     envMap: reflection,
                     opacity: 0.5
@@ -158,6 +165,10 @@
                  */
 
                 this.mesh.geometry.vertices.forEach(moveVerticles);
+                // this.mesh.geometry.vertices.forEach(moveVerticles2);
+
+
+
                 this.mesh.geometry.verticesNeedUpdate = true;
 
                 /**
@@ -185,11 +196,11 @@
                  * @type {DirectionalLight}
                  */
 
-                // var directionalLight = new Three.DirectionalLight( 0xffffff, 4 );
-                // directionalLight.position.y = -200;
-                // directionalLight.position.z = 400;
-                // directionalLight.position.x = -300;
-                // this.scene.add( directionalLight );
+                var directionalLight = new Three.DirectionalLight( 0xffffff, 1 );
+                directionalLight.position.y = -200;
+                directionalLight.position.z = 400;
+                directionalLight.position.x = -300;
+                this.scene.add( directionalLight );
 
 
                 /**
@@ -208,7 +219,7 @@
                 this.spotLight.shadow.camera.near = 500;
                 this.spotLight.shadow.camera.far = 4000;
                 this.spotLight.shadow.camera.fov = 30;
-                this.spotLight.intensity = 1.6;
+                this.spotLight.intensity = 1;
 
 
 
@@ -223,7 +234,7 @@
                 this.spotLight2.shadow.camera.near = 500;
                 this.spotLight2.shadow.camera.far = 4000;
                 this.spotLight2.shadow.camera.fov = 30;
-                this.spotLight2.intensity = 1.6;
+                this.spotLight2.intensity = 1;
 
                 this.scene.add( this.spotLight );
                 this.scene.add( this.spotLight2 );
@@ -235,7 +246,7 @@
                  */
 
 
-                this.renderer = new Three.WebGLRenderer({antialias: true, alpha: true});
+                this.renderer = new Three.WebGLRenderer({antialias: true, alpha: false});
                 this.renderer.setSize(container.clientWidth, container.clientHeight);
                 container.appendChild(this.renderer.domElement);
 
@@ -308,9 +319,17 @@
 
                 function moveVerticles(item, index) {
                     if (index > 3520) {
-                        item.set(item.x,-1.77082,item.z);
+                         item.set(item.x,-1.80082,item.z);
                     }
                 }
+
+
+                // function moveVerticles2(item, index) {
+                //     if (index > 3648 && index < 4033) {
+                //         item.set(item.x,-2.81082,item.z);
+                //     }
+                // }
+
 
 
 
@@ -382,12 +401,17 @@
 
 
 
+
+                this.gui.add(this.params, 'multiplier', 0.5, 7)
+
             },
             animate: function() {
 
                 const vertices = this.geometryCopy.vertices;
                 let d2 = 0;
                 let d = 0;
+                let multiplier = this.params.multiplier;
+
 
                 requestAnimationFrame(this.animate);
 
@@ -395,6 +419,8 @@
                  * set up time changes
                  * @type {number}
                  */
+
+
 
                 this.time += 0.01;
                 let time = this.time;
@@ -419,28 +445,6 @@
                         d2 = Math.pow(vertices[index].x, 2) + Math.pow(vertices[index].z, 2);
                         d = Math.sqrt(d2);
 
-                        let stretch = 0.47 * d * (3 - d);
-
-
-                        if (index == 3530) {
-                            // console.log(d);
-                            // console.log((d/0.75+2));
-                            // console.log(item.x);
-                            // console.log(item.z);
-                            // console.log(vertices[index].x * (d/0.75+2) );
-                            // console.log(vertices[index].z * (d/0.75+2) );
-                            // console.log('------------');
-
-                        }
-
-                        // console.log('----');
-                        // console.log(item2.x);
-                        // console.log(item2.y);
-                        // console.log(d);
-                        // console.log(d2);
-
-//console.log(vertices[3560].x);
-// console.log(d);
 
                         if  (index != 4033)
                         {
@@ -450,12 +454,24 @@
 
                             // let sin = Math.sin(time)/2+1.5;
 
-                            let sin = ((4 * Math.cos(time * 2)) + 4) ;
+                            // let sin = ((4 * Math.cos(time * 2)) + 4)/24 ;
+                            let sin = ((3.5 * Math.sin(time )) + 4) ;
+
+
 
 
                             // let formula = (-(d*3/0.75) + 4);
 
-                            let formula = (Math.sqrt((0.76 + sin) / (d + sin))) ;
+                             //let formula = (Math.sqrt(((0.76) + sin) / ((d) + sin))) ;
+                             //let formula = -(multiplier/(1+Math.pow(400, d*-1)*1.5))+multiplier +0.89 ;
+                             let formula = -(sin/(1+Math.pow(400, d*-1)))+sin + 1 - (sin/100) ;
+
+
+
+
+                            if (index == 4022) {
+                                //console.log(formula);
+                            }
 
                             // item.x = vertices[index].x * ( (-(((sin) * d)/0.75) + (1 + sin))  );
                             // item.z = vertices[index].z * ( (-(((sin) * d)/0.75) + (1 + sin))  );
@@ -477,127 +493,12 @@
 
                         }
 
-                        // if(index == 3525 || index == 4020) {
-                        //     console.log('no: ' + index + '------------' );
-                        //     console.log('x: ' + item.x);
-                        //     console.log('z: ' + item.z);
-                        // }
-
-
                     }
                 });
 
 
 
-                this.mesh.geometry.faceVertexUvs[0].forEach(function (item, index) {
 
-                    if (index > 7103  ) {
-
-                        item.forEach(function (item2, index2) {
-
-                            if (index2 !=2) {
-
-
-
-
-
-                                // item2.x = item2.x - Math.sin(time)*0.0003;
-                                // item2.y = item2.y - Math.sin(time)*0.0003;
-
-                                // item2.x = 1;
-                                // item2.y = 0;
-
-                            }
-
-
-                        });
-
-                    }
-                });
-
-                // let x = 0;
-
-                // this.mesh.geometry.faceVertexUvs[0].forEach(function(item, index){
-                //     // item[1].x = 0 + Math.sin(time);
-                //     // item[1].y = 0 + Math.sin(time);
-                //     // item[0].x = 0 + Math.sin(time);
-                //     // item[0].y = 0 + Math.sin(time);
-                //
-                //     x = x + 0.000001;
-                //
-                //
-                //     if (index > 7103 && index < 7232) {
-                //
-                //         item[1].x = item[1].x + time * (0.0003 + x);
-                //         item[1].y = item[1].y + time * (0.0003 + x);
-                //         item[0].x = item[0].x + time * (0.0003 + x);
-                //         item[0].y = item[0].y + time * (0.0003 + x);
-                //         item[2].x = item[2].x + time * (0.0003 + x);
-                //         item[2].y = item[2].y + time * (0.0003 + x);
-                //
-                //         // item[1].x += 0.0001 ;
-                //         // item[1].y += 0.0001 ;
-                //         // item[0].x += 0.0001 ;
-                //         // item[0].y += 0.0001 ;
-                //         // item[2].x += 0.0001 ;
-                //         // item[2].y += 0.0001 ;
-                //
-                //     }
-                //
-                // });
-
-
-
-                this.mesh.geometry.vertices.forEach(function (item, index) {
-
-                    // if (index > 3520  ) {
-                    //
-                    //     let d2 = (item.x ^ 2 + item.z ^ 2);
-                    //
-                    //     if (d2 < 1 * 1) {
-                    //         let d = Math.sqrt(d2);
-                    //         let stretch = (1 / 1.5) * d * (2 - d);
-                    //         let stretchX = item.x * d;
-                    //         let stretchZ = item.z * d;
-                    //
-                    //         item.set(stretchX, item.y, stretchZ);
-                    //     }
-                    //
-                    // }
-
-                    // let d2 = (item.x^2 + item.y^2);
-                    // if (d2 < R*R) {
-                    //     let d = Math.sqrt(d2);
-                    //     let stretch = (r / rt) * d * (R - d);
-                    //     let stretchX = item.x / d;
-                    //     let stretchY = item.y / d;
-                    // }
-
-
-
-
-                    if (index > 3520  ) {
-
-
-                        // let d2 = (item.x ^ 2 + item.z ^ 2);
-                        // let d = Math.sqrt(d2);
-                        //
-                        // if (item.z < 0 ){
-                        //     item.set((Math.sin(time) * 200 ), item.y, (Math.sin(time) * 200));
-                        // }
-                        // else {
-                        //     item.set((Math.sin(-time) / d ) - 0.1, item.y, item.z);
-                        // }
-
-
-                        // if (item.z > 0 ){
-                        //     item.set(item.x, item.y, (Math.sin(time) * 0.1 ) + 0.1);
-                        // } else {
-                        //     item.set(item.x, item.y, (Math.sin(-time) * 0.1 ) - 0.1);
-                        // }
-
-                    }
-                });
                 this.mesh.geometry.verticesNeedUpdate = true;
                 this.mesh.geometry.uvsNeedUpdate = true;
 

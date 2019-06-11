@@ -15,7 +15,9 @@
     </head>
     <body>
         <div id="app">
-            <animated-background-component></animated-background-component>
+            {{--<animated-background-component></animated-background-component>--}}
+            {{--<three-boilerplate-component></three-boilerplate-component>--}}
+            <planet-component></planet-component>
             {{--<playground-component></playground-component>--}}
             <menu-component></menu-component>
             <transition name="fade" mode="out-in">

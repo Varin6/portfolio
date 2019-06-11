@@ -11007,3 +11007,7 @@ canvas {
   height: 100%;
 }
 
+body > div.dg.ac {
+  z-index: 1000000;
+}
+

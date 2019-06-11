@@ -38,6 +38,8 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 Vue.component('menu-component', require('./components/Menu.vue').default);
 Vue.component('animated-background-component', require('./components/AnimatedBackground.vue').default);
 Vue.component('playground-component', require('./components/Playground.vue').default);
+Vue.component('three-boilerplate-component', require('./components/ThreeBoilerplate.vue').default);
+Vue.component('planet-component', require('./components/Planet.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

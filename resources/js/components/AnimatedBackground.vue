@@ -438,6 +438,7 @@
 
 
 
+
                 this.mesh.geometry.vertices.forEach(function (item, index) {
 
                     if (index > 3520  ) {

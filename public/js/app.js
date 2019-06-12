@@ -2495,7 +2495,10 @@ __webpack_require__.r(__webpack_exports__);
         height: 5 * 32 - 1
       }),
       params: {
-        multiplier: 5
+        multiplier: 5,
+        reflectivity: 0,
+        roughness: 0,
+        metalness: 0
       }
     };
   },
@@ -2559,7 +2562,8 @@ __webpack_require__.r(__webpack_exports__);
         normalScale: new three__WEBPACK_IMPORTED_MODULE_0__["Vector2"](0.8, 0.8),
         envMap: reflection,
         envMapIntensity: 0.5,
-        metalness: 0.6
+        metalness: 0.6,
+        reflectifity: this.params.reflectivity
       });
       /**
        * set up Meshes
@@ -2722,7 +2726,8 @@ __webpack_require__.r(__webpack_exports__);
       });
       this.rotationX = this.mesh.rotation.x;
       this.rotationY = this.mesh.rotation.y;
-      this.gui.add(this.params, 'multiplier', 0.5, 7);
+      this.gui.add(this.params, 'roughness', 0, 1);
+      this.gui.add(this.params, 'metalness', 0, 1);
       /**
        * Generate random integer between numbers
        * @param min
@@ -2753,6 +2758,8 @@ __webpack_require__.r(__webpack_exports__);
        * @type {number}
        */
 
+      this.mesh.material.roughness = this.params.roughness;
+      this.mesh.material.metalness = this.params.metalness;
       this.mesh.rotation.y = this.rotationY + Math.sin(time);
       this.mesh.geometry.verticesNeedUpdate = true;
       this.mesh.geometry.uvsNeedUpdate = true;

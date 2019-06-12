@@ -2549,13 +2549,13 @@ __webpack_require__.r(__webpack_exports__);
        */
 
       var material = new three__WEBPACK_IMPORTED_MODULE_0__["MeshStandardMaterial"]({
-        color: 0xeeeeee,
+        color: 0x5E9FFD,
         roughness: 0.1,
         //wireframe: true,
-        map: texture,
+        //map: texture,
         //bumpMap: textureBump,
         //bumpScale: 1,
-        normalMap: textureNormal,
+        //normalMap: textureNormal,
         normalScale: new three__WEBPACK_IMPORTED_MODULE_0__["Vector2"](0.8, 0.8),
         envMap: reflection,
         envMapIntensity: 0.5,
@@ -2597,8 +2597,14 @@ __webpack_require__.r(__webpack_exports__);
         });
 
         for (var x = 0; x <= 10; x++) {
-          var renadomVertex = parseInt(getRndInteger(that.sphereV1 * 2, that.sphereV1 * (that.sphereV1 - 2)));
-          mountains.push(renadomVertex);
+          var randomVertex = parseInt(getRndInteger(that.sphereV1 * 2, that.sphereV1 * (that.sphereV1 - 2)));
+          mountains.push(randomVertex);
+        }
+
+        for (var _x = 0; _x <= 10; _x++) {
+          var _randomVertex = parseInt(getRndInteger(that.sphereV1 * 2, that.sphereV1 * (that.sphereV1 - 2)));
+
+          valleys.push(_randomVertex);
         } // console.log(mountains);
 
 
@@ -2613,6 +2619,10 @@ __webpack_require__.r(__webpack_exports__);
             item.z = item.z + getRndInteger(-0.0100, 0.05000) * item.z;
           }
         });
+        /**
+         * generate mountains
+         */
+
         mountains.forEach(function (item, index) {
           var area = [];
           area.push(mesh.geometry.vertices[item]);
@@ -2625,14 +2635,36 @@ __webpack_require__.r(__webpack_exports__);
           area.push(mesh.geometry.vertices[item + that.sphereV1 - 1]);
           area.push(mesh.geometry.vertices[item + that.sphereV1 + 1]);
           area.forEach(function (item2, index2) {
-            //console.log(item2);
             item2.x = item2.x + getRndInteger(0.0100, 0.0800) * item2.x;
             item2.y = item2.y + getRndInteger(0.0100, 0.0800) * item2.y;
             item2.z = item2.z + getRndInteger(0.0100, 0.0800) * item2.z;
           });
         });
+        /**
+         * generate valleys
+         */
+
+        valleys.forEach(function (item, index) {
+          var area = [];
+          area.push(mesh.geometry.vertices[item]);
+          area.push(mesh.geometry.vertices[item - 1]);
+          area.push(mesh.geometry.vertices[item + 1]);
+          area.push(mesh.geometry.vertices[item - that.sphereV1]);
+          area.push(mesh.geometry.vertices[item - that.sphereV1 - 1]);
+          area.push(mesh.geometry.vertices[item - that.sphereV1 + 1]);
+          area.push(mesh.geometry.vertices[item + that.sphereV1]);
+          area.push(mesh.geometry.vertices[item + that.sphereV1 - 1]);
+          area.push(mesh.geometry.vertices[item + that.sphereV1 + 1]);
+          area.forEach(function (item2, index2) {
+            item2.x = item2.x + getRndInteger(-0.0800, -0.0100) * item2.x;
+            item2.y = item2.y + getRndInteger(-0.0800, -0.0100) * item2.y;
+            item2.z = item2.z + getRndInteger(-0.0800, -0.0100) * item2.z;
+          });
+        });
         mesh.geometry.verticesNeedUpdate = true;
         mesh.geometry.uvsNeedUpdate = true;
+        mesh.geometry.computeVertexNormals();
+        mesh.geometry.computeFaceNormals();
       }
       /**
        * Ambient light
@@ -2704,7 +2736,8 @@ __webpack_require__.r(__webpack_exports__);
 
       window.addEventListener('click', function () {
         generatePlanetGeometry(that);
-      }); //generatePlanetGeometry(this);
+      });
+      generatePlanetGeometry(this);
     },
     animate: function animate() {
       requestAnimationFrame(this.animate);

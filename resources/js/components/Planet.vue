@@ -103,13 +103,13 @@
                  */
 
                 let material = new Three.MeshStandardMaterial({
-                    color: 0xeeeeee,
+                    color: 0x5E9FFD,
                     roughness: 0.1,
                     //wireframe: true,
-                    map: texture,
+                    //map: texture,
                     //bumpMap: textureBump,
                     //bumpScale: 1,
-                    normalMap: textureNormal,
+                    //normalMap: textureNormal,
                     normalScale : new Three.Vector2(0.8,0.8),
                     envMap: reflection,
                     envMapIntensity: 0.5,
@@ -164,9 +164,6 @@
 
 
 
-
-
-
                     that.originalGeometry.vertices.forEach(function (item, index) {
 
                         mesh.geometry.vertices[index].x = item.x;
@@ -178,8 +175,16 @@
 
                     for (let x = 0; x <= 10; x++) {
 
-                        let renadomVertex = parseInt(getRndInteger(that.sphereV1 * 2, (that.sphereV1 * (that.sphereV1 - 2))));
-                        mountains.push(renadomVertex)
+                        let randomVertex = parseInt(getRndInteger(that.sphereV1 * 2, (that.sphereV1 * (that.sphereV1 - 2))));
+                        mountains.push(randomVertex)
+
+                    }
+
+
+                    for (let x = 0; x <= 10; x++) {
+
+                        let randomVertex = parseInt(getRndInteger(that.sphereV1 * 2, (that.sphereV1 * (that.sphereV1 - 2))));
+                        valleys.push(randomVertex)
 
                     }
 
@@ -207,6 +212,11 @@
                     });
 
 
+                    /**
+                     * generate mountains
+                     */
+
+
                     mountains.forEach(function (item, index) {
 
                         let area = [];
@@ -225,9 +235,6 @@
 
                         area.forEach(function (item2, index2) {
 
-
-                            //console.log(item2);
-
                             item2.x = item2.x + getRndInteger(0.0100, 0.0800) * item2.x;
                             item2.y = item2.y + getRndInteger(0.0100, 0.0800) * item2.y;
                             item2.z = item2.z + getRndInteger(0.0100, 0.0800) * item2.z;
@@ -235,8 +242,38 @@
 
                         });
 
+                    });
 
 
+                    /**
+                     * generate valleys
+                     */
+
+
+                    valleys.forEach(function (item, index) {
+
+                        let area = [];
+
+                        area.push(mesh.geometry.vertices[item]);
+                        area.push(mesh.geometry.vertices[item - 1]);
+                        area.push(mesh.geometry.vertices[item + 1]);
+
+                        area.push(mesh.geometry.vertices[item - that.sphereV1]);
+                        area.push(mesh.geometry.vertices[item - that.sphereV1 - 1]);
+                        area.push(mesh.geometry.vertices[item - that.sphereV1 + 1]);
+
+                        area.push(mesh.geometry.vertices[item + that.sphereV1]);
+                        area.push(mesh.geometry.vertices[item + that.sphereV1 - 1]);
+                        area.push(mesh.geometry.vertices[item + that.sphereV1 + 1]);
+
+                        area.forEach(function (item2, index2) {
+
+                            item2.x = item2.x + getRndInteger(-0.0800, -0.0100) * item2.x;
+                            item2.y = item2.y + getRndInteger(-0.0800, -0.0100) * item2.y;
+                            item2.z = item2.z + getRndInteger(-0.0800, -0.0100) * item2.z;
+
+
+                        });
 
                     });
 
@@ -244,9 +281,10 @@
                     mesh.geometry.verticesNeedUpdate = true;
                     mesh.geometry.uvsNeedUpdate = true;
 
+                    mesh.geometry.computeVertexNormals();
+                    mesh.geometry.computeFaceNormals();
+
                 }
-
-
 
 
 
@@ -340,7 +378,8 @@
                 });
 
 
-                //generatePlanetGeometry(this);
+                generatePlanetGeometry(this);
+
 
 
 

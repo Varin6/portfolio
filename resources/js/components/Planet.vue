@@ -25,8 +25,8 @@
                 mesh: null,
                 time: 0,
                 vertices: null,
-                sphereV1: 64,
-                sphereV2: 64,
+                sphereV1: 16,
+                sphereV2: 16,
                 rotationX: 0,
                 rotationY: 0,
                 originalGeometry: null,
@@ -38,6 +38,8 @@
                     reflectivity: 0,
                     roughness: 0,
                     metalness: 0,
+                    wireframe: false,
+
                 },
 
 
@@ -75,9 +77,34 @@
                  * @type {Texture}
                  */
 
-                let texture = new Three.TextureLoader().load( '/images/moon.jpg');
+                //let texture = new Three.TextureLoader().load( '/images/moon.jpg');
                  let textureNormal = new Three.TextureLoader().load( '/images/moon-normal.png');
                  let reflection = new Three.TextureLoader().load( '/images/refl2.jpg');
+
+                let width = 512;
+                let height = 512;
+                let size = width * height;
+                let data = new Uint8Array( 3 * size );
+
+                let r = Math.floor( Math.random() * 255 );
+                let g = Math.floor( Math.random() * 255 );
+                let b = Math.floor( Math.random() * 255 );
+
+                for ( let i = 0; i < size; i ++ ) {
+
+                    let stride = i * 3;
+
+                    data[ stride ] = r;
+                    data[ stride + 1 ] = g;
+                    data[ stride + 2 ] = b;
+
+                }
+
+// used the buffer to create a DataTexture
+
+                let texture = new Three.DataTexture( data, width, height, Three.RGBFormat );
+                texture.needsUpdate = true;
+
 
                 /**
                  * set up reflections
@@ -100,18 +127,25 @@
                  */
 
 
-                let geometry = new Three.SphereGeometry(2.5, this.sphereV1, this.sphereV2);
+                //let geometry = new Three.SphereGeometry(2.5, this.sphereV1, this.sphereV2);
+                let geometry = new Three.BoxGeometry(2.5, 2.5, 2.5, this.sphereV1, this.sphereV2, this.sphereV2);
 
                 /**
                  * set up Materials
                  * @type {MeshStandardMaterial}
                  */
 
+
+                for (let i in geometry.vertices) {
+                    let vertex = geometry.vertices[i];
+                    vertex.normalize().multiplyScalar(2.5);
+                }
+
                 let material = new Three.MeshStandardMaterial({
-                    color: 0x5E9FFD,
+                    //color: 0x5E9FFD,
                     roughness: 0.1,
-                    //wireframe: true,
-                    //map: texture,
+                    wireframe: true,
+                    map: texture,
                     //bumpMap: textureBump,
                     //bumpScale: 1,
                     //normalMap: textureNormal,
@@ -202,16 +236,16 @@
 
                         if (index <= (that.sphereV1 - 1) * 12 || index >= (that.sphereV1 - 1) * (that.sphereV1 - 12)) {
 
-                            item.x = item.x + getRndInteger(-0.0100, 0.05000) * item.x;
-                            item.y = item.y + getRndInteger(-0.0100, 0.05000) * item.y;
-                            item.z = item.z + getRndInteger(-0.0100, 0.05000) * item.z;
+                            item.x = item.x + getRndInteger(-0.0100, 0.0200) * item.x;
+                            item.y = item.y + getRndInteger(-0.0100, 0.0200) * item.y;
+                            item.z = item.z + getRndInteger(-0.0100, 0.0200) * item.z;
 
                         } else {
 
 
-                            item.x = item.x + getRndInteger(-0.0100, 0.05000) * item.x;
-                            item.y = item.y + getRndInteger(-0.0100, 0.05000) * item.y;
-                            item.z = item.z + getRndInteger(-0.0100, 0.05000) * item.z;
+                            item.x = item.x + getRndInteger(-0.0100, 0.0200) * item.x;
+                            item.y = item.y + getRndInteger(-0.0100, 0.0200) * item.y;
+                            item.z = item.z + getRndInteger(-0.0100, 0.0200) * item.z;
 
                         }
 
@@ -363,6 +397,7 @@
 
                 this.gui.add(this.params, 'roughness', 0, 1);
                 this.gui.add(this.params, 'metalness', 0, 1);
+                this.gui.add(this.params, 'wireframe', 0, 1);
 
 
 
@@ -387,10 +422,16 @@
                 });
 
 
-                generatePlanetGeometry(this);
+                //generatePlanetGeometry(this);
 
 
 
+
+                this.mesh.geometry.verticesNeedUpdate = true;
+                this.mesh.geometry.uvsNeedUpdate = true;
+
+                this.mesh.geometry.computeVertexNormals();
+                this.mesh.geometry.computeFaceNormals();
 
 
             },
@@ -418,6 +459,11 @@
 
                 this.mesh.rotation.y = this.rotationY + Math.sin(time);
 
+                if (this.params.wireframe == 1) {
+                    this.mesh.material.wireframe = true
+                } else {
+                    this.mesh.material.wireframe = false
+                }
 
 
                 this.mesh.geometry.verticesNeedUpdate = true;

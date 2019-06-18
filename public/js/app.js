@@ -2486,8 +2486,8 @@ __webpack_require__.r(__webpack_exports__);
       mesh: null,
       time: 0,
       vertices: null,
-      sphereV1: 64,
-      sphereV2: 64,
+      sphereV1: 16,
+      sphereV2: 16,
       rotationX: 0,
       rotationY: 0,
       originalGeometry: null,
@@ -2498,7 +2498,8 @@ __webpack_require__.r(__webpack_exports__);
         multiplier: 5,
         reflectivity: 0,
         roughness: 0,
-        metalness: 0
+        metalness: 0,
+        wireframe: false
       }
     };
   },
@@ -2525,10 +2526,28 @@ __webpack_require__.r(__webpack_exports__);
        * load textures
        * @type {Texture}
        */
+      //let texture = new Three.TextureLoader().load( '/images/moon.jpg');
 
-      var texture = new three__WEBPACK_IMPORTED_MODULE_0__["TextureLoader"]().load('/images/moon.jpg');
       var textureNormal = new three__WEBPACK_IMPORTED_MODULE_0__["TextureLoader"]().load('/images/moon-normal.png');
       var reflection = new three__WEBPACK_IMPORTED_MODULE_0__["TextureLoader"]().load('/images/refl2.jpg');
+      var width = 512;
+      var height = 512;
+      var size = width * height;
+      var data = new Uint8Array(3 * size);
+      var r = Math.floor(Math.random() * 255);
+      var g = Math.floor(Math.random() * 255);
+      var b = Math.floor(Math.random() * 255);
+
+      for (var i = 0; i < size; i++) {
+        var stride = i * 3;
+        data[stride] = r;
+        data[stride + 1] = g;
+        data[stride + 2] = b;
+      } // used the buffer to create a DataTexture
+
+
+      var texture = new three__WEBPACK_IMPORTED_MODULE_0__["DataTexture"](data, width, height, three__WEBPACK_IMPORTED_MODULE_0__["RGBFormat"]);
+      texture.needsUpdate = true;
       /**
        * set up reflections
        * @type {PixelFormat}
@@ -2544,18 +2563,24 @@ __webpack_require__.r(__webpack_exports__);
        * set up Geometries
        * @type {SphereGeometry}
        */
+      //let geometry = new Three.SphereGeometry(2.5, this.sphereV1, this.sphereV2);
 
-      var geometry = new three__WEBPACK_IMPORTED_MODULE_0__["SphereGeometry"](2.5, this.sphereV1, this.sphereV2);
+      var geometry = new three__WEBPACK_IMPORTED_MODULE_0__["BoxGeometry"](2.5, 2.5, 2.5, this.sphereV1, this.sphereV2, this.sphereV2);
       /**
        * set up Materials
        * @type {MeshStandardMaterial}
        */
 
+      for (var _i in geometry.vertices) {
+        var vertex = geometry.vertices[_i];
+        vertex.normalize().multiplyScalar(2.5);
+      }
+
       var material = new three__WEBPACK_IMPORTED_MODULE_0__["MeshStandardMaterial"]({
-        color: 0x5E9FFD,
+        //color: 0x5E9FFD,
         roughness: 0.1,
-        //wireframe: true,
-        //map: texture,
+        wireframe: true,
+        map: texture,
         //bumpMap: textureBump,
         //bumpScale: 1,
         //normalMap: textureNormal,
@@ -2614,13 +2639,13 @@ __webpack_require__.r(__webpack_exports__);
 
         that.mesh.geometry.vertices.forEach(function (item, index) {
           if (index <= (that.sphereV1 - 1) * 12 || index >= (that.sphereV1 - 1) * (that.sphereV1 - 12)) {
-            item.x = item.x + getRndInteger(-0.0100, 0.05000) * item.x;
-            item.y = item.y + getRndInteger(-0.0100, 0.05000) * item.y;
-            item.z = item.z + getRndInteger(-0.0100, 0.05000) * item.z;
+            item.x = item.x + getRndInteger(-0.0100, 0.0200) * item.x;
+            item.y = item.y + getRndInteger(-0.0100, 0.0200) * item.y;
+            item.z = item.z + getRndInteger(-0.0100, 0.0200) * item.z;
           } else {
-            item.x = item.x + getRndInteger(-0.0100, 0.05000) * item.x;
-            item.y = item.y + getRndInteger(-0.0100, 0.05000) * item.y;
-            item.z = item.z + getRndInteger(-0.0100, 0.05000) * item.z;
+            item.x = item.x + getRndInteger(-0.0100, 0.0200) * item.x;
+            item.y = item.y + getRndInteger(-0.0100, 0.0200) * item.y;
+            item.z = item.z + getRndInteger(-0.0100, 0.0200) * item.z;
           }
         });
         /**
@@ -2728,6 +2753,7 @@ __webpack_require__.r(__webpack_exports__);
       this.rotationY = this.mesh.rotation.y;
       this.gui.add(this.params, 'roughness', 0, 1);
       this.gui.add(this.params, 'metalness', 0, 1);
+      this.gui.add(this.params, 'wireframe', 0, 1);
       /**
        * Generate random integer between numbers
        * @param min
@@ -2741,8 +2767,12 @@ __webpack_require__.r(__webpack_exports__);
 
       window.addEventListener('click', function () {
         generatePlanetGeometry(that);
-      });
-      generatePlanetGeometry(this);
+      }); //generatePlanetGeometry(this);
+
+      this.mesh.geometry.verticesNeedUpdate = true;
+      this.mesh.geometry.uvsNeedUpdate = true;
+      this.mesh.geometry.computeVertexNormals();
+      this.mesh.geometry.computeFaceNormals();
     },
     animate: function animate() {
       requestAnimationFrame(this.animate);
@@ -2761,6 +2791,13 @@ __webpack_require__.r(__webpack_exports__);
       this.mesh.material.roughness = this.params.roughness;
       this.mesh.material.metalness = this.params.metalness;
       this.mesh.rotation.y = this.rotationY + Math.sin(time);
+
+      if (this.params.wireframe == 1) {
+        this.mesh.material.wireframe = true;
+      } else {
+        this.mesh.material.wireframe = false;
+      }
+
       this.mesh.geometry.verticesNeedUpdate = true;
       this.mesh.geometry.uvsNeedUpdate = true;
       this.renderer.render(this.scene, this.camera);

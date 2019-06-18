@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a7d30500-cd0d-4c87-9e30-34ddfae69db9" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/resources/js/utilities.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/AnimatedBackground.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/AnimatedBackground.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/Planet.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Planet.vue" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -132,21 +132,9 @@
             </entry>
           </file>
           <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/public/js/app.js">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="1824593">
-                  <caret line="107305" selection-start-line="107305" selection-end-line="107305" />
-                  <folding>
-                    <element signature="n#!!doc" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/resources/js/components/AnimatedBackground.vue">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="309">
+                <state relative-caret-position="7429">
                   <caret line="439" selection-start-line="439" selection-end-line="439" />
                   <folding>
                     <element signature="e#115#146#0" expanded="true" />
@@ -164,16 +152,21 @@
               </provider>
             </entry>
           </file>
-          <file pinned="false" current-in-tab="true">
+          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/resources/js/components/Planet.vue">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="571">
-                  <caret line="362" column="15" selection-start-line="362" selection-start-column="15" selection-end-line="362" selection-end-column="15" />
+                <state relative-caret-position="7888">
+                  <caret line="462" column="39" selection-start-line="462" selection-start-column="39" selection-end-line="462" selection-end-column="39" />
                   <folding>
                     <element signature="e#115#146#0" expanded="true" />
                   </folding>
                 </state>
               </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/resources/js/utilities.js">
+              <provider selected="true" editor-type-id="text-editor" />
             </entry>
           </file>
           <file pinned="false" current-in-tab="false">
@@ -275,6 +268,13 @@
       </split-second>
     </splitter>
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+      </list>
+    </option>
+  </component>
   <component name="FindInProjectRecents">
     <findStrings>
       <find>menuT</find>
@@ -302,6 +302,9 @@
       <find>console</find>
       <find>normal</find>
       <find>params</find>
+      <find>original</find>
+      <find>roughness</find>
+      <find>wireframe</find>
     </findStrings>
     <replaceStrings>
       <replace>iconIsHovering</replace>
@@ -336,6 +339,7 @@
         <option value="$PROJECT_DIR$/resources/views/app.blade.php" />
         <option value="$PROJECT_DIR$/resources/js/components/AnimatedBackground.vue" />
         <option value="$PROJECT_DIR$/resources/js/components/Planet.vue" />
+        <option value="$PROJECT_DIR$/resources/js/utilities.js" />
       </list>
     </option>
   </component>
@@ -486,13 +490,6 @@
               <item name="Portfolio" type="b2602c69:ProjectViewProjectNode" />
               <item name="Portfolio" type="462c0819:PsiDirectoryNode" />
               <item name="resources" type="462c0819:PsiDirectoryNode" />
-              <item name="js" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Portfolio" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Portfolio" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
               <item name="sass" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -559,12 +556,14 @@
       <updated>1557953198983</updated>
       <workItem from="1557953200205" duration="19296000" />
       <workItem from="1558460587771" duration="74365000" />
-      <workItem from="1560378700233" duration="2590000" />
+      <workItem from="1560378700233" duration="2964000" />
+      <workItem from="1560455307260" duration="940000" />
+      <workItem from="1560799250608" duration="1487000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="162391000" />
+    <option name="totallyTimeSpent" value="165192000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -579,7 +578,7 @@
     <frame x="-8" y="-8" width="1936" height="1066" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.12953092" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.13166311" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -594,7 +593,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="11" visible="true" weight="0.17256163" />
+      <window_info anchor="bottom" id="Terminal" order="11" visible="true" weight="0.32583067" />
       <window_info anchor="bottom" id="TypeScript" order="12" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -628,6 +627,23 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="196">
           <caret line="17" column="2" selection-start-line="17" selection-start-column="2" selection-end-line="17" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/js/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="619">
+          <caret line="54299" column="16" selection-start-line="54299" selection-start-column="16" selection-end-line="54299" selection-end-column="16" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/three/src/math/Vector3.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="233">
+          <caret line="100" column="2" selection-start-line="100" selection-start-column="2" selection-end-line="100" selection-end-column="2" />
         </state>
       </provider>
     </entry>
@@ -718,12 +734,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/js/app.js">
+    <entry file="file://$PROJECT_DIR$/resources/js/components/AnimatedBackground.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1824593">
-          <caret line="107305" selection-start-line="107305" selection-end-line="107305" />
+        <state relative-caret-position="7429">
+          <caret line="439" selection-start-line="439" selection-end-line="439" />
           <folding>
-            <element signature="n#!!doc" expanded="true" />
+            <element signature="e#115#146#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -804,25 +820,25 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/components/AnimatedBackground.vue">
+    <entry file="file://$PROJECT_DIR$/node_modules/three/src/Three.d.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="309">
-          <caret line="439" selection-start-line="439" selection-end-line="439" />
+        <state relative-caret-position="454">
+          <caret line="176" selection-end-line="176" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/js/components/Planet.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="7888">
+          <caret line="462" column="39" selection-start-line="462" selection-start-column="39" selection-end-line="462" selection-end-column="39" />
           <folding>
             <element signature="e#115#146#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/components/Planet.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="571">
-          <caret line="362" column="15" selection-start-line="362" selection-start-column="15" selection-end-line="362" selection-end-column="15" />
-          <folding>
-            <element signature="e#115#146#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
+    <entry file="file://$PROJECT_DIR$/resources/js/utilities.js">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
   </component>
 </project>

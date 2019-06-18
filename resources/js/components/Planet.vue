@@ -81,29 +81,9 @@
                  let textureNormal = new Three.TextureLoader().load( '/images/moon-normal.png');
                  let reflection = new Three.TextureLoader().load( '/images/refl2.jpg');
 
-                let width = 512;
-                let height = 512;
-                let size = width * height;
-                let data = new Uint8Array( 3 * size );
 
-                let r = Math.floor( Math.random() * 255 );
-                let g = Math.floor( Math.random() * 255 );
-                let b = Math.floor( Math.random() * 255 );
+                 let texture = generateDataMaterial();
 
-                for ( let i = 0; i < size; i ++ ) {
-
-                    let stride = i * 3;
-
-                    data[ stride ] = r;
-                    data[ stride + 1 ] = g;
-                    data[ stride + 2 ] = b;
-
-                }
-
-// used the buffer to create a DataTexture
-
-                let texture = new Three.DataTexture( data, width, height, Three.RGBFormat );
-                texture.needsUpdate = true;
 
 
                 /**
@@ -195,8 +175,42 @@
 
                 let that = this;
 
+
+                function generateDataMaterial() {
+
+                    let width = 512;
+                    let height = 512;
+                    let size = width * height;
+                    let data = new Uint8Array( 3 * size );
+
+                    let r = Math.floor( Math.random() * 255 );
+                    let g = Math.floor( Math.random() * 255 );
+                    let b = Math.floor( Math.random() * 255 );
+
+                    for ( let i = 0; i < size; i ++ ) {
+
+                        let stride = i * 3;
+
+                        data[ stride ] = r;
+                        data[ stride + 1 ] = g;
+                        data[ stride + 2 ] = b;
+
+                    }
+
+// used the buffer to create a DataTexture
+
+                    let texture = new Three.DataTexture( data, width, height, Three.RGBFormat );
+                    texture.needsUpdate = true;
+
+                    return texture;
+
+                }
+
+
+
                 function generatePlanetGeometry(that) {
 
+                    console.log();
 
                     let mesh = that.mesh;
                     let mountains = [];
@@ -215,7 +229,7 @@
 
                     for (let x = 0; x <= 10; x++) {
 
-                        let randomVertex = parseInt(getRndInteger(that.sphereV1 * 2, (that.sphereV1 * (that.sphereV1 - 2))));
+                        let randomVertex = parseInt(getRndInteger(30,(((that.sphereV1 * (that.sphereV1/2))*11) + 2) ));
                         mountains.push(randomVertex)
 
                     }
@@ -223,7 +237,7 @@
 
                     for (let x = 0; x <= 10; x++) {
 
-                        let randomVertex = parseInt(getRndInteger(that.sphereV1 * 2, (that.sphereV1 * (that.sphereV1 - 2))));
+                        let randomVertex = parseInt(getRndInteger(30,(((that.sphereV1 * (that.sphereV1/2))*11) + 2) ));
                         valleys.push(randomVertex)
 
                     }
@@ -418,7 +432,10 @@
 
 
                 window.addEventListener('click', function () {
+                    let texture = generateDataMaterial();
                     generatePlanetGeometry(that);
+                    that.mesh.material.map = texture;
+
                 });
 
 

@@ -2530,24 +2530,7 @@ __webpack_require__.r(__webpack_exports__);
 
       var textureNormal = new three__WEBPACK_IMPORTED_MODULE_0__["TextureLoader"]().load('/images/moon-normal.png');
       var reflection = new three__WEBPACK_IMPORTED_MODULE_0__["TextureLoader"]().load('/images/refl2.jpg');
-      var width = 512;
-      var height = 512;
-      var size = width * height;
-      var data = new Uint8Array(3 * size);
-      var r = Math.floor(Math.random() * 255);
-      var g = Math.floor(Math.random() * 255);
-      var b = Math.floor(Math.random() * 255);
-
-      for (var i = 0; i < size; i++) {
-        var stride = i * 3;
-        data[stride] = r;
-        data[stride + 1] = g;
-        data[stride + 2] = b;
-      } // used the buffer to create a DataTexture
-
-
-      var texture = new three__WEBPACK_IMPORTED_MODULE_0__["DataTexture"](data, width, height, three__WEBPACK_IMPORTED_MODULE_0__["RGBFormat"]);
-      texture.needsUpdate = true;
+      var texture = generateDataMaterial();
       /**
        * set up reflections
        * @type {PixelFormat}
@@ -2571,8 +2554,8 @@ __webpack_require__.r(__webpack_exports__);
        * @type {MeshStandardMaterial}
        */
 
-      for (var _i in geometry.vertices) {
-        var vertex = geometry.vertices[_i];
+      for (var i in geometry.vertices) {
+        var vertex = geometry.vertices[i];
         vertex.normalize().multiplyScalar(2.5);
       }
 
@@ -2615,7 +2598,30 @@ __webpack_require__.r(__webpack_exports__);
 
       var that = this;
 
+      function generateDataMaterial() {
+        var width = 512;
+        var height = 512;
+        var size = width * height;
+        var data = new Uint8Array(3 * size);
+        var r = Math.floor(Math.random() * 255);
+        var g = Math.floor(Math.random() * 255);
+        var b = Math.floor(Math.random() * 255);
+
+        for (var _i = 0; _i < size; _i++) {
+          var stride = _i * 3;
+          data[stride] = r;
+          data[stride + 1] = g;
+          data[stride + 2] = b;
+        } // used the buffer to create a DataTexture
+
+
+        var texture = new three__WEBPACK_IMPORTED_MODULE_0__["DataTexture"](data, width, height, three__WEBPACK_IMPORTED_MODULE_0__["RGBFormat"]);
+        texture.needsUpdate = true;
+        return texture;
+      }
+
       function generatePlanetGeometry(that) {
+        console.log();
         var mesh = that.mesh;
         var mountains = [];
         var valleys = [];
@@ -2626,12 +2632,12 @@ __webpack_require__.r(__webpack_exports__);
         });
 
         for (var x = 0; x <= 10; x++) {
-          var randomVertex = parseInt(getRndInteger(that.sphereV1 * 2, that.sphereV1 * (that.sphereV1 - 2)));
+          var randomVertex = parseInt(getRndInteger(30, that.sphereV1 * (that.sphereV1 / 2) * 11 + 2));
           mountains.push(randomVertex);
         }
 
         for (var _x = 0; _x <= 10; _x++) {
-          var _randomVertex = parseInt(getRndInteger(that.sphereV1 * 2, that.sphereV1 * (that.sphereV1 - 2)));
+          var _randomVertex = parseInt(getRndInteger(30, that.sphereV1 * (that.sphereV1 / 2) * 11 + 2));
 
           valleys.push(_randomVertex);
         } // console.log(mountains);
@@ -2766,7 +2772,9 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       window.addEventListener('click', function () {
+        var texture = generateDataMaterial();
         generatePlanetGeometry(that);
+        that.mesh.material.map = texture;
       }); //generatePlanetGeometry(this);
 
       this.mesh.geometry.verticesNeedUpdate = true;

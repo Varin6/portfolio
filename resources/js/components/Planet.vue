@@ -11,6 +11,7 @@
     import * as Three from 'three';
     import * as OrbitControls from 'three-orbitcontrols';
     import * as dat from 'dat.gui';
+    import * as Util from '../utilities';
 
 
     //const OrbitControls = require('three-orbitcontrols');
@@ -85,6 +86,53 @@
                  let texture = generateDataMaterial();
 
 
+                let width = 512;
+                let height = 512;
+
+
+                function generateMap() {
+
+                    let materialArray = [];
+
+                    for (let i = 0; i < 6; i++) {
+
+                        console.log('creating map');
+
+                        let map = createMap(i, Util.scalarField);
+
+                        let faceMaterial = new Three.MeshStandardMaterial({
+                            map: map,
+                            needsUpdate: true,
+                        });
+
+                        materialArray.push(faceMaterial);
+                    }
+
+                    let newMaterialArray = materialArray.slice();
+
+                    newMaterialArray[2] = materialArray[3];
+                    newMaterialArray[3] = materialArray[2];
+
+                    return newMaterialArray;
+                }
+
+                let newMaterialArray = generateMap();
+
+
+                //let texture = new Three.DataTexture( Util.makeScalarField(), width, height, Three.RGBFormat );
+
+                function createMap(index, scalarField) {
+
+                    let map = new Three.DataTexture( Util.makeScalarField(index, width, height), width, height, Three.RGBFormat );
+                    // let map = THREE.ImageUtils.generateDataTexture(resolution, resolution, new THREE.Color(0x000000));
+                    map.needsUpdate = true;
+                    return map;
+                }
+
+
+
+
+
 
                 /**
                  * set up reflections
@@ -143,7 +191,8 @@
                  * @type {Mesh}
                  */
 
-                this.mesh = new Three.Mesh(geometry, material);
+                // this.mesh = new Three.Mesh(geometry, material);
+                this.mesh = new Three.Mesh(geometry, newMaterialArray);
                 this.mesh.position.x = 0;
                 this.mesh.position.y = 0;
                 this.mesh.position.z = 0;
@@ -183,11 +232,13 @@
                     let size = width * height;
                     let data = new Uint8Array( 3 * size );
 
-                    let r = Math.floor( Math.random() * 255 );
-                    let g = Math.floor( Math.random() * 255 );
-                    let b = Math.floor( Math.random() * 255 );
+
 
                     for ( let i = 0; i < size; i ++ ) {
+
+                        let r = Math.floor( Math.random() * 255 );
+                        let g = Math.floor( Math.random() * 255 );
+                        let b = Math.floor( Math.random() * 255 );
 
                         let stride = i * 3;
 
@@ -342,7 +393,6 @@
 
 
 
-
                 /**
                  * Ambient light
                  * @type {AmbientLight}
@@ -390,6 +440,8 @@
 
 
 
+
+
                 /**
                  * Set up canvas resize on window resize
                  */
@@ -432,9 +484,31 @@
 
 
                 window.addEventListener('click', function () {
-                    let texture = generateDataMaterial();
+                    //let texture = generateDataMaterial();
                     generatePlanetGeometry(that);
-                    that.mesh.material.map = texture;
+
+
+                    for (let i = 0; i < 6; i++) {
+
+                        console.log('creating map');
+
+                        // let map2 = createMap(i, Util.scalarField);
+
+                        that.mesh.material[i].map = createMap(i, Util.scalarField);
+
+                        that.mesh.material[i].map.needsUpdate = true;
+                        that.mesh.material[i].needsUpdate = true;
+                        that.mesh.material.needsUpdate = true;
+
+
+                    }
+
+
+
+
+
+
+
 
                 });
 
@@ -471,15 +545,24 @@
                  * @type {number}
                  */
 
-                this.mesh.material.roughness = this.params.roughness;
-                this.mesh.material.metalness = this.params.metalness;
+                let that = this;
+                this.mesh.material.forEach(function (item, index) {
+                    item.roughness = that.params.roughness;
+                })
+                this.mesh.material.forEach(function (item, index) {
+                    item.metalness = that.params.metalness;
+                })
 
                 this.mesh.rotation.y = this.rotationY + Math.sin(time);
 
                 if (this.params.wireframe == 1) {
-                    this.mesh.material.wireframe = true
+                    this.mesh.material.forEach(function (item, index) {
+                        item.wireframe = true;
+                    })
                 } else {
-                    this.mesh.material.wireframe = false
+                    this.mesh.material.forEach(function (item, index) {
+                        item.wireframe = false;
+                    })
                 }
 
 

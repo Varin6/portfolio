@@ -86,8 +86,8 @@
                  let texture = generateDataMaterial();
 
 
-                let width = 512;
-                let height = 512;
+                let width = 256;
+                let height = 256;
 
 
                 function generateMap() {
@@ -483,29 +483,21 @@
 
 
 
+                that = this;
+
                 window.addEventListener('click', function () {
                     //let texture = generateDataMaterial();
                     generatePlanetGeometry(that);
 
 
-                    for (let i = 0; i < 6; i++) {
+                    Util.generateSeeds();
 
-                        console.log('creating map');
+                    //console.log(Util.stringToNumber('bobe'));
+                    // console.log(Util.random('bobe'));
 
-                        // let map2 = createMap(i, Util.scalarField);
-
-                        that.mesh.material[i].map = createMap(i, Util.scalarField);
-
-                        that.mesh.material[i].map.needsUpdate = true;
-                        that.mesh.material[i].needsUpdate = true;
-                        that.mesh.material.needsUpdate = true;
-
-
-                    }
-
-
-
-
+                    let newMaterialArray = generateMap();
+                    that.mesh.material = newMaterialArray;
+                    that.mesh.material[0].map.needsUpdate = true;
 
 
 
@@ -568,6 +560,24 @@
 
                 this.mesh.geometry.verticesNeedUpdate = true;
                 this.mesh.geometry.uvsNeedUpdate = true;
+                this.mesh.material.needsUpdate = true;
+
+
+
+                this.mesh.material.map.needsUpdate = true;
+
+
+                for (let i = 0; i < 6; i++) {
+
+
+                    // console.log('updating needsupd');
+
+                    this.mesh.material[i].map.needsUpdate = true;
+                    this.mesh.material[i].needsUpdate = true;
+                    this.mesh.material.needsUpdate = true;
+
+
+                }
 
 
                 this.renderer.render(this.scene, this.camera);

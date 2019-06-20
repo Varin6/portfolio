@@ -1,5 +1,31 @@
 import * as Three from 'three';
 
+
+window.N = 512*512;
+window.G = makeSpecifiedArray1D(N, Math.random, new Float32Array(N));
+window.P = makeSpecifiedArray1D(N, function() {return randomInt(0, N-1)}, new Uint32Array(N));
+window.ran1 = ( Math.floor(Math.random() * 100 ) ) / 10;
+window.ran2 = ( Math.floor(Math.random() * 100 ) ) / 10;
+window.ran3 = ( Math.floor(Math.random() * 100 ) ) / 10;
+
+export function generateSeeds() {
+    window.G = makeSpecifiedArray1D(N, Math.random, new Float32Array(N));
+    window.P = makeSpecifiedArray1D(N, function() {return randomInt(0, N-1)}, new Uint32Array(N));
+
+    // window.ran1 = ( Math.floor(Math.random() * 255 ) ) ;
+    // window.ran2 = ( Math.floor(Math.random() * 255 ) ) ;
+    // window.ran3 = ( Math.floor(Math.random() * 255 ) ) ;
+
+    window.ran1 = Math.random();
+    window.ran2 = Math.random();
+    window.ran3 = Math.random();
+
+}
+
+
+
+
+
 export function makeScalarField(index,width, height) {
     let nofPixels = width*height;
     let size = width * height;
@@ -10,12 +36,14 @@ export function makeScalarField(index,width, height) {
         let y = Math.floor(i/width);
         let sphericalCoord = getSphericalCoord(index, x, y, width);
 
+
         let color = scalarField(sphericalCoord.x, sphericalCoord.y, sphericalCoord.z);
 
         data[i*3] = color.r*255;
         data[i*3+1] = color.g*255;
         data[i*3+2] = color.b*255;
     }
+
 
     return data;
 }
@@ -77,11 +105,12 @@ export function scalarField(x, y, z) {
     c *= 1 + level3*0.075;
     c *= 1 + levelMax*(1/50);
 
-    if (c < 0.5) c *= 0.9;
+    if (c < 0.5) c *= 0.6;
 
-    c = clamp(c, 0, 1);
+    c = clamp(c, 0, 2);
 
-    return new Three.Color().setRGB(c, c + 0.1, c + 0.6);
+
+    return new Three.Color().setRGB(c + ran1  , c + ran2 , c + ran3 );
 }
 
 export function clamp(number, from, to) {
@@ -98,9 +127,6 @@ export function makeSpecifiedArray1D(size, value, array) {
     return array;
 }
 
-window.N = 256*256;
-window.G = makeSpecifiedArray1D(N, Math.random, new Float32Array(N));
-window.P = makeSpecifiedArray1D(N, function() {return randomInt(0, N-1)}, new Uint32Array(N));
 
 
 export function random4(i, j, k) {
@@ -113,7 +139,8 @@ export function randomInt(from, to, seed) {
 }
 
 export function randomFloat(from, to, seed) {
-    return random(seed)*(to-from)+from;
+    // return random(seed)*(to-from)+from;
+    return Math.random()*369584646456549;
 }
 
 
@@ -192,3 +219,17 @@ export function tricosineInterpolation(coordFloat, scalarField) {
 }
 
 
+
+export function stringToNumber(string){
+
+    string.forEach(function (item, index) {
+        console.log(item);
+    })
+
+}
+
+export function bobewille(seed, test_name, options) {
+    let word = CryptoJS.MD5("" + seed + test_name).words[0]; // take first 32-bit word
+    i = Math.abs(word % options.length);
+    return options[i];
+}

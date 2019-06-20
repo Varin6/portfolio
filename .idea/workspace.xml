@@ -155,8 +155,8 @@
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/resources/js/components/Planet.vue">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="235">
-                  <caret line="494" column="24" lean-forward="true" selection-start-line="494" selection-start-column="27" selection-end-line="494" selection-end-column="69" />
+                <state relative-caret-position="282">
+                  <caret line="89" column="32" selection-start-line="89" selection-start-column="32" selection-end-line="89" selection-end-column="32" />
                   <folding>
                     <element signature="e#115#146#0" expanded="true" />
                   </folding>
@@ -167,8 +167,8 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/resources/js/utilities.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="371">
-                  <caret line="83" column="52" selection-start-line="83" selection-start-column="52" selection-end-line="83" selection-end-column="52" />
+                <state relative-caret-position="401">
+                  <caret line="230" selection-start-line="230" selection-end-line="234" selection-end-column="1" />
                 </state>
               </provider>
             </entry>
@@ -263,16 +263,12 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>cubeShader</find>
-      <find>ambie</find>
-      <find>faceVertexUvs</find>
       <find>ambien</find>
       <find>direc</find>
       <find>spotli</find>
       <find>renderer</find>
       <find>rotat</find>
       <find>rota</find>
-      <find>console</find>
       <find>normal</find>
       <find>params</find>
       <find>original</find>
@@ -291,8 +287,12 @@
       <find>scalarField</find>
       <find>size</find>
       <find>geometry</find>
-      <find>wire</find>
       <find>replace</find>
+      <find>wire</find>
+      <find>console</find>
+      <find>console.</find>
+      <find>random</find>
+      <find>seed =</find>
     </findStrings>
     <replaceStrings>
       <replace>iconIsHovering</replace>
@@ -547,12 +547,12 @@
       <workItem from="1558460587771" duration="74365000" />
       <workItem from="1560378700233" duration="2964000" />
       <workItem from="1560455307260" duration="940000" />
-      <workItem from="1560799250608" duration="18125000" />
+      <workItem from="1560799250608" duration="28125000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="181830000" />
+    <option name="totallyTimeSpent" value="191830000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -860,13 +860,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/utilities.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="371">
-          <caret line="83" column="52" selection-start-line="83" selection-start-column="52" selection-end-line="83" selection-end-column="52" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/resources/js/components/AnimatedBackground.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="500">
@@ -877,10 +870,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/resources/js/utilities.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="401">
+          <caret line="230" selection-start-line="230" selection-end-line="234" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/resources/js/components/Planet.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="235">
-          <caret line="494" column="24" lean-forward="true" selection-start-line="494" selection-start-column="27" selection-end-line="494" selection-end-column="69" />
+        <state relative-caret-position="282">
+          <caret line="89" column="32" selection-start-line="89" selection-start-column="32" selection-end-line="89" selection-end-column="32" />
           <folding>
             <element signature="e#115#146#0" expanded="true" />
           </folding>

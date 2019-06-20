@@ -2533,8 +2533,8 @@ __webpack_require__.r(__webpack_exports__);
       var textureNormal = new three__WEBPACK_IMPORTED_MODULE_0__["TextureLoader"]().load('/images/moon-normal.png');
       var reflection = new three__WEBPACK_IMPORTED_MODULE_0__["TextureLoader"]().load('/images/refl2.jpg');
       var texture = generateDataMaterial();
-      var width = 512;
-      var height = 512;
+      var width = 256;
+      var height = 256;
 
       function generateMap() {
         var materialArray = [];
@@ -2805,18 +2805,16 @@ __webpack_require__.r(__webpack_exports__);
         return Math.random() * (max - min) + min;
       }
 
+      that = this;
       window.addEventListener('click', function () {
         //let texture = generateDataMaterial();
         generatePlanetGeometry(that);
+        _utilities__WEBPACK_IMPORTED_MODULE_3__["generateSeeds"](); //console.log(Util.stringToNumber('bobe'));
+        // console.log(Util.random('bobe'));
 
-        for (var _i2 = 0; _i2 < 6; _i2++) {
-          console.log('creating map'); // let map2 = createMap(i, Util.scalarField);
-
-          that.mesh.material[_i2].map = createMap(_i2, _utilities__WEBPACK_IMPORTED_MODULE_3__["scalarField"]);
-          that.mesh.material[_i2].map.needsUpdate = true;
-          that.mesh.material[_i2].needsUpdate = true;
-          that.mesh.material.needsUpdate = true;
-        }
+        var newMaterialArray = generateMap();
+        that.mesh.material = newMaterialArray;
+        that.mesh.material[0].map.needsUpdate = true;
       }); //generatePlanetGeometry(this);
 
       this.mesh.geometry.verticesNeedUpdate = true;
@@ -2859,6 +2857,16 @@ __webpack_require__.r(__webpack_exports__);
 
       this.mesh.geometry.verticesNeedUpdate = true;
       this.mesh.geometry.uvsNeedUpdate = true;
+      this.mesh.material.needsUpdate = true;
+      this.mesh.material.map.needsUpdate = true;
+
+      for (var i = 0; i < 6; i++) {
+        // console.log('updating needsupd');
+        this.mesh.material[i].map.needsUpdate = true;
+        this.mesh.material[i].needsUpdate = true;
+        this.mesh.material.needsUpdate = true;
+      }
+
       this.renderer.render(this.scene, this.camera);
     }
   },
@@ -107405,11 +107413,12 @@ __webpack_require__.r(__webpack_exports__);
 /*!***********************************!*\
   !*** ./resources/js/utilities.js ***!
   \***********************************/
-/*! exports provided: makeScalarField, getSphericalCoord, scalarField, clamp, makeSpecifiedArray1D, random4, randomInt, randomFloat, random, trilinearInterpolation, nearestNeighbour, tricosineInterpolation */
+/*! exports provided: generateSeeds, makeScalarField, getSphericalCoord, scalarField, clamp, makeSpecifiedArray1D, random4, randomInt, randomFloat, random, trilinearInterpolation, nearestNeighbour, tricosineInterpolation, stringToNumber, bobewille */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "generateSeeds", function() { return generateSeeds; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "makeScalarField", function() { return makeScalarField; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getSphericalCoord", function() { return getSphericalCoord; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "scalarField", function() { return scalarField; });
@@ -107422,21 +107431,43 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "trilinearInterpolation", function() { return trilinearInterpolation; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "nearestNeighbour", function() { return nearestNeighbour; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "tricosineInterpolation", function() { return tricosineInterpolation; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "stringToNumber", function() { return stringToNumber; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "bobewille", function() { return bobewille; });
 /* harmony import */ var three__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! three */ "./node_modules/three/build/three.module.js");
 
+window.N = 512 * 512;
+window.G = makeSpecifiedArray1D(N, Math.random, new Float32Array(N));
+window.P = makeSpecifiedArray1D(N, function () {
+  return randomInt(0, N - 1);
+}, new Uint32Array(N));
+window.ran1 = Math.floor(Math.random() * 100) / 10;
+window.ran2 = Math.floor(Math.random() * 100) / 10;
+window.ran3 = Math.floor(Math.random() * 100) / 10;
+function generateSeeds() {
+  window.G = makeSpecifiedArray1D(N, Math.random, new Float32Array(N));
+  window.P = makeSpecifiedArray1D(N, function () {
+    return randomInt(0, N - 1);
+  }, new Uint32Array(N)); // window.ran1 = ( Math.floor(Math.random() * 255 ) ) ;
+  // window.ran2 = ( Math.floor(Math.random() * 255 ) ) ;
+  // window.ran3 = ( Math.floor(Math.random() * 255 ) ) ;
+
+  window.ran1 = Math.random();
+  window.ran2 = Math.random();
+  window.ran3 = Math.random();
+}
 function makeScalarField(index, width, height) {
   var nofPixels = width * height;
   var size = width * height;
   var data = new Uint8Array(3 * size);
 
-  for (var i = 0; i < nofPixels; i++) {
-    var x = i % width;
-    var y = Math.floor(i / width);
+  for (var _i = 0; _i < nofPixels; _i++) {
+    var x = _i % width;
+    var y = Math.floor(_i / width);
     var sphericalCoord = getSphericalCoord(index, x, y, width);
     var color = scalarField(sphericalCoord.x, sphericalCoord.y, sphericalCoord.z);
-    data[i * 3] = color.r * 255;
-    data[i * 3 + 1] = color.g * 255;
-    data[i * 3 + 2] = color.b * 255;
+    data[_i * 3] = color.r * 255;
+    data[_i * 3 + 1] = color.g * 255;
+    data[_i * 3 + 2] = color.b * 255;
   }
 
   return data;
@@ -107500,9 +107531,9 @@ function scalarField(x, y, z) {
   c *= 1 + level2 * 0.25;
   c *= 1 + level3 * 0.075;
   c *= 1 + levelMax * (1 / 50);
-  if (c < 0.5) c *= 0.9;
-  c = clamp(c, 0, 1);
-  return new three__WEBPACK_IMPORTED_MODULE_0__["Color"]().setRGB(c, c + 0.1, c + 0.6);
+  if (c < 0.5) c *= 0.6;
+  c = clamp(c, 0, 2);
+  return new three__WEBPACK_IMPORTED_MODULE_0__["Color"]().setRGB(c + ran1, c + ran2, c + ran3);
 }
 function clamp(number, from, to) {
   return Math.max(Math.min(number, to), from);
@@ -107517,11 +107548,6 @@ function makeSpecifiedArray1D(size, value, array) {
 
   return array;
 }
-window.N = 256 * 256;
-window.G = makeSpecifiedArray1D(N, Math.random, new Float32Array(N));
-window.P = makeSpecifiedArray1D(N, function () {
-  return randomInt(0, N - 1);
-}, new Uint32Array(N));
 function random4(i, j, k) {
   return G[(i + P[(j + P[k % N]) % N]) % N];
 }
@@ -107529,7 +107555,8 @@ function randomInt(from, to, seed) {
   return Math.floor(randomFloat(from, to + 1, seed));
 }
 function randomFloat(from, to, seed) {
-  return random(seed) * (to - from) + from;
+  // return random(seed)*(to-from)+from;
+  return Math.random() * 369584646456549;
 }
 function random(seed) {
   var scope = random;
@@ -107596,6 +107623,17 @@ function tricosineInterpolation(coordFloat, scalarField) {
   };
 
   return trilinearInterpolation(coordFloat, scalarField, interpolation);
+}
+function stringToNumber(string) {
+  string.forEach(function (item, index) {
+    console.log(item);
+  });
+}
+function bobewille(seed, test_name, options) {
+  var word = CryptoJS.MD5("" + seed + test_name).words[0]; // take first 32-bit word
+
+  i = Math.abs(word % options.length);
+  return options[i];
 }
 
 /***/ }),
